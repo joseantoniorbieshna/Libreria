@@ -3,10 +3,16 @@ package controlador;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import javafx.scene.control.RadioButton;
+import modelo.Formato;
 import modelo.Libro;
 import utilidades.Validators;
 import vista.UI;
@@ -23,13 +29,14 @@ public class ParaUI extends UI {
 		
 		comportamientoTextoNumeroNatural(textISBN);
 		comportamientoTextoNumeroReal(textPrecio);
+		comportamientoTextoSinNumerosYSimbolos(textAutor);
 	}
 
 	public void addComportamientoGuardar() {
 		this.btnSave.addActionListener(e -> {
 			if (!textISBN.getText().isEmpty()) {
 				Libro book = new Libro(textISBN.getText(), textTItulo.getText(), textAutor.getText(),
-						textEditorial.getText(), Float.parseFloat(textPrecio.getText()));
+						textEditorial.getText(), Float.parseFloat(textPrecio.getText()),Formato.getFormatoByTexto(""));
 				libreria.addLibro(book);
 				vaciarCampos();
 				rellenarTabla();
@@ -71,6 +78,20 @@ public class ParaUI extends UI {
 				StringBuilder texto = new StringBuilder(textField.getText());
 				texto.append(e.getKeyChar());
 				if( !Validators.isNaturalNumber(texto.toString()) && !Validators.isRealNumber(texto.toString())) {
+					e.consume();
+				}
+			}
+		});
+	}
+	
+	public void comportamientoTextoSinNumerosYSimbolos(JTextField textField) {
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				StringBuilder texto = new StringBuilder(textField.getText());
+				texto.append(e.getKeyChar());
+				if( !Validators.isPhraseWithoutSymbolsAndNumber(texto.toString())) {
 					e.consume();
 				}
 			}

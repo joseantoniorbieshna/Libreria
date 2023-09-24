@@ -3,17 +3,23 @@ package vista;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Formato;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.border.LineBorder;
+
+import controlador.PanelRadioButton;
 
 public class UI extends JFrame {
 
@@ -30,7 +36,9 @@ public class UI extends JFrame {
 	protected JPanel panelDerecha;
 	protected JButton btnDelete;
 	protected JButton btnConsultar;
-	protected JLabel Formato;
+	protected JTextField textFormato;
+	protected PanelRadioButton panelFormato;
+	protected PanelRadioButton panelEstado;
 
 
 	/**
@@ -38,7 +46,7 @@ public class UI extends JFrame {
 	 */
 	public UI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 573, 374);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -61,55 +69,63 @@ public class UI extends JFrame {
 		JPanel panelIzquierda = new JPanel();
 		panelIzquierda.setBackground(new Color(241, 228, 158));
 		panelCentral.addTab("Libro", null, panelIzquierda, null);
-		panelIzquierda.setLayout(new GridLayout(0, 2, 6, 0));
+		panelIzquierda.setLayout(new MigLayout("insets 1%,gap rel 0.5%", "[20%,grow][40%,grow][40%,grow]", "[28px][28px][28px][28px][28px][28px][28px][28px][28px]"));
 		
 		JLabel lblISBN = new JLabel("ISBN");
 		lblISBN.setHorizontalAlignment(SwingConstants.CENTER);
-		panelIzquierda.add(lblISBN);
+		panelIzquierda.add(lblISBN, "cell 0 0,grow");
 		
 		textISBN = new JTextField();
-		panelIzquierda.add(textISBN);
+		panelIzquierda.add(textISBN, "cell 1 0,grow");
 		textISBN.setColumns(10);
 		
 		JLabel lblTitulo = new JLabel("Titulo");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		panelIzquierda.add(lblTitulo);
+		panelIzquierda.add(lblTitulo, "cell 0 1,grow");
 		
 		textTItulo = new JTextField();
-		panelIzquierda.add(textTItulo);
+		panelIzquierda.add(textTItulo, "cell 1 1,grow");
 		textTItulo.setColumns(10);
 		
 		JLabel lblAutor = new JLabel("Autor");
 		lblAutor.setHorizontalAlignment(SwingConstants.CENTER);
-		panelIzquierda.add(lblAutor);
+		panelIzquierda.add(lblAutor, "cell 0 2,grow");
 		
 		textAutor = new JTextField();
-		panelIzquierda.add(textAutor);
+		panelIzquierda.add(textAutor, "cell 1 2,grow");
 		textAutor.setColumns(10);
 		
 		JLabel lblEditorial = new JLabel("Editorial");
 		lblEditorial.setHorizontalAlignment(SwingConstants.CENTER);
-		panelIzquierda.add(lblEditorial);
+		panelIzquierda.add(lblEditorial, "cell 0 3,grow");
 		
 		textEditorial = new JTextField();
-		panelIzquierda.add(textEditorial);
+		panelIzquierda.add(textEditorial, "cell 1 3,grow");
 		textEditorial.setColumns(10);
 		
 		JLabel lblPrecio = new JLabel("Precio");
 		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-		panelIzquierda.add(lblPrecio);
+		panelIzquierda.add(lblPrecio, "cell 0 4,grow");
 		
 		textPrecio = new JTextField();
-		panelIzquierda.add(textPrecio);
+		panelIzquierda.add(textPrecio, "cell 1 4,grow");
 		textPrecio.setColumns(10);
 		
-		Formato = new JLabel("Formato");
-		Formato.setHorizontalAlignment(SwingConstants.CENTER);
-		panelIzquierda.add(Formato);
+		JLabel formato = new JLabel("Formato");
+		formato.setHorizontalAlignment(SwingConstants.CENTER);
+		panelIzquierda.add(formato, "cell 0 5 1 2,grow");
 		
-		JTextField textFormato = new JTextField();
-		panelIzquierda.add(textFormato);
-		textFormato.setColumns(10);
+		
+		panelFormato = new PanelRadioButton(Formato.getAllText());
+		panelFormato.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelIzquierda.add(panelFormato, "cell 1 5 2 2,growx,aligny center");
+		
+		JLabel lblEstado = new JLabel("Estado:");
+		panelIzquierda.add(lblEstado, "cell 0 7 1 2,alignx center,growy");
+		
+		panelEstado = new PanelRadioButton(new String[]{"Reedición", "Novedad"});
+		panelIzquierda.add(panelEstado, "cell 1 7 2 2,growx,aligny center");
+		
 		
 		panelDerecha = new JPanel();
 		panelCentral.addTab("Libreria", null, panelDerecha, null);
@@ -148,5 +164,6 @@ public class UI extends JFrame {
 		textTItulo.setText("");
 		textPrecio.setText("");
 		textEditorial.setText("");
+		textFormato.setText("");
 	}
 }

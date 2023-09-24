@@ -1,8 +1,11 @@
 package controlador;
 
 import java.awt.EventQueue;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import vista.UI;
+import javax.imageio.ImageIO;
+
 
 public class Principal {
 
@@ -15,6 +18,13 @@ public class Principal {
 				try {
 					ParaUI frame = new ParaUI();
 					frame.setVisible(true);
+					
+					frame.setTitle("Winrar Library");
+					
+					/*Crear imagen*/
+					BufferedImage image= ImageIO.read(new File("src/recursos/winrar.png"));
+					frame.setIconImage(image);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

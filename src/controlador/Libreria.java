@@ -9,6 +9,7 @@ import utilidades.LibroObjectMother;
 
 public class Libreria {
 	private ArrayList<Libro> arrayLibro = new ArrayList<>();
+	private final static String[] nombresColumnas = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO" };
 	
 	
 	public Libreria() {
@@ -46,14 +47,16 @@ public class Libreria {
 	}
 	
 	public DefaultTableModel getFillTableModel() {
-			String[] nombresColumnas = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO" };
-			String[][] filasTabla = new String[getLibreria().size()][5];
+			String[][] filasTabla = new String[getLibreria().size()][6];
 			for (int i = 0; i < this.getLibreria().size(); i++) {
-				filasTabla[i][0] = this.getLibreria().get(i).getISBN();
-				filasTabla[i][1] = this.getLibreria().get(i).getTitulo();
-				filasTabla[i][2] = this.getLibreria().get(i).getEditorial();
-				filasTabla[i][3] = this.getLibreria().get(i).getAutor();
-				filasTabla[i][4] = String.valueOf(getLibreria().get(i).getPrecio());
+				Libro libroActual = this.getLibreria().get(i);
+				
+				filasTabla[i][0] = libroActual.getISBN();
+				filasTabla[i][1] = libroActual.getTitulo();
+				filasTabla[i][2] = libroActual.getEditorial();
+				filasTabla[i][3] = libroActual.getAutor();
+				filasTabla[i][4] = String.valueOf(libroActual.getPrecio());
+				filasTabla[i][5] = libroActual.getFormato().getTextoFormato();
 			}
 			DefaultTableModel tableWithFill = new DefaultTableModel(filasTabla,nombresColumnas);
 			return tableWithFill;	
