@@ -36,6 +36,14 @@ public class PanelRadioButton extends JPanel{
 		return null;
 	}
 	
+	public void deselectedAll() {
+		Iterator<JRadioButton> iterator = radioButtons.iterator();
+		while(iterator.hasNext()) {
+			JRadioButton boton = iterator.next();
+			boton.setSelected(false);
+		}
+	}
+	
 	
 	private ActionListener getComportamiento() {
 		return new ActionListener() {

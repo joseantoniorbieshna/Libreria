@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -19,6 +20,7 @@ import vista.UI;
 
 public class ParaUI extends UI {
 	private Libreria libreria = new Libreria();
+	private JPanel actualSelectedJPanel = panelLibro;
 
 	public ParaUI() {
 		addComportamientoGuardar();
@@ -30,7 +32,10 @@ public class ParaUI extends UI {
 		comportamientoTextoNumeroNatural(textISBN);
 		comportamientoTextoNumeroReal(textPrecio);
 		comportamientoTextoSinNumerosYSimbolos(textAutor);
+		
+		addBehaviourActualLabel();
 	}
+
 
 	public void addComportamientoGuardar() {
 		this.btnSave.addActionListener(e -> {
@@ -53,8 +58,16 @@ public class ParaUI extends UI {
 	}
 
 	public void addComportamientoBorrar() {
-		this.btnDelete.addActionListener(e -> vaciarCampos());
-	}
+			this.btnDelete.addActionListener(e ->{
+				if(actualSelectedJPanel.equals(panelLibreria)) {
+					System.out.println("Borrar en libreria");
+				}else {
+					System.out.println("Borrar en libro");
+					vaciarCampos();					
+				}
+				
+			});						
+		}
 	
 	public void comportamientoTextoNumeroNatural(JTextField textField) {
 		textField.addKeyListener(new KeyAdapter() {
@@ -115,5 +128,22 @@ public class ParaUI extends UI {
 
 		});
 	}
+	
+	public void addBehaviourActualLabel() {
+        panelCentral.addChangeListener(e->{
+                if(panelLibro.isVisible()) {
+                    actualSelectedJPanel = panelLibro;
+                    
+                    btnSave.setVisible(true);
+                    btnConsultar.setVisible(true);
+                }else if(panelLibreria.isVisible()){
+                    actualSelectedJPanel = panelLibreria;
+                    
+                    btnSave.setVisible(false);
+                    btnConsultar.setVisible(false);
+                }
+            }
+        );
+    }
 
 }
