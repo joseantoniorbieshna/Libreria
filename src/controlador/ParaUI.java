@@ -21,6 +21,7 @@ import vista.UI;
 public class ParaUI extends UI {
 	private Libreria libreria = new Libreria();
 	private JPanel actualSelectedJPanel = panelLibro;
+	private static int LONGITUD_ISBN=13;
 	private String seleccionadoIsbnTabla;
 
 	public ParaUI() {
@@ -30,7 +31,7 @@ public class ParaUI extends UI {
 		addComportamientoSalir();
 		rellenarTabla();
 		
-		comportamientoTextoNumeroNatural(textISBN);
+		comportamientoTextoIsbn(textISBN);
 		comportamientoTextoNumeroReal(textPrecio);
 		comportamientoTextoSinNumerosYSimbolos(textAutor);
 		
@@ -41,7 +42,7 @@ public class ParaUI extends UI {
 
 	public void addComportamientoGuardar() {
 		this.btnSave.addActionListener(e -> {
-			if (!textISBN.getText().isEmpty()) {
+			if (estanTodosCamposLlenos()) {
 				Libro book = new Libro(textISBN.getText(), textTItulo.getText(), textAutor.getText(),
 						textEditorial.getText(), Float.parseFloat(textPrecio.getText()),panelFormato.getTextRButtonSelected());
 				libreria.addLibro(book);
@@ -71,14 +72,14 @@ public class ParaUI extends UI {
 			});						
 		}
 	
-	public void comportamientoTextoNumeroNatural(JTextField textField) {
+	public void comportamientoTextoIsbn(JTextField textField) {
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				// TODO Auto-generated method stub
 				StringBuilder texto = new StringBuilder(textField.getText());
 				texto.append(e.getKeyChar());
-				if(!Validators.isNaturalNumber(texto.toString())) {
+				if(!Validators.isNaturalNumber(texto.toString()) || texto.length()>LONGITUD_ISBN) {
 					e.consume();
 				}
 			}
@@ -183,6 +184,13 @@ public class ParaUI extends UI {
 		});
 	}
 	
-	
+	private boolean estanTodosCamposLlenos() {
+		if(textISBN.getText()!=null && textTItulo.getText()!=null && textAutor.getText()!=null
+				&& textEditorial.getText() != null && panelFormato.getTextRButtonSelected() != null
+				&& panelEstado.getTextRButtonSelected() != null) {
+			return true;
+		}
+		return false;
+	}
 	
 }
