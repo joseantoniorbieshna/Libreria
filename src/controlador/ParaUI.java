@@ -1,6 +1,9 @@
 package controlador;
 
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -112,7 +115,6 @@ public class ParaUI extends UI {
 	public Libreria getLibreria() {
 		return libreria;
 	}
-	
 	
 	
 }

@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.border.LineBorder;
 
 import controlador.PanelRadioButton;
+import javax.swing.ImageIcon;
 
 public class UI extends JFrame {
 
@@ -41,6 +44,7 @@ public class UI extends JFrame {
 	private JPanel panelLibro;
 	private JTabbedPane panelCentral;
 	private JPanel panelComprarVender;
+	private JLabel lblPhoto;
 
 
 	/**
@@ -56,20 +60,21 @@ public class UI extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelSuperior = new JPanel();
-		panelSuperior.setBackground(new Color(0, 255, 0));
+		panelSuperior.setBackground(new Color(248, 203, 166));
 		panelSuperior.setForeground(new Color(0, 0, 0));
 		contentPane.add(panelSuperior, BorderLayout.NORTH);
 		
 		JLabel LabelTItulo = new JLabel("LIBRERIA");
-		LabelTItulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		LabelTItulo.setForeground(new Color(0, 0, 0));
+		LabelTItulo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panelSuperior.add(LabelTItulo);
 		
 		panelCentral = new JTabbedPane(JTabbedPane.TOP);
-		panelCentral.setBackground(new Color(241, 228, 158));
+		panelCentral.setBackground(new Color(255, 251, 235));
 		contentPane.add(panelCentral, BorderLayout.CENTER);
 		
 		panelLibro = new JPanel();
-		panelLibro.setBackground(new Color(241, 228, 158));
+		panelLibro.setBackground(new Color(255, 251, 235));
 		panelCentral.addTab("Libro", null, panelLibro, null);
 		panelLibro.setLayout(new MigLayout("insets 1%,gap rel 0.5%", "[20%,grow][40%,grow][40%,grow]", "[28px][28px][28px][28px][28px][28px][28px][28px][28px]"));
 		
@@ -80,6 +85,11 @@ public class UI extends JFrame {
 		textISBN = new JTextField();
 		panelLibro.add(textISBN, "cell 1 0,grow");
 		textISBN.setColumns(10);
+		
+		lblPhoto = new JLabel("");
+		ImageIcon imagen = resizeIcon(new ImageIcon(UI.class.getResource("/recursos/estanteLibros.png")), 100, 100);
+		lblPhoto.setIcon(imagen);
+		panelLibro.add(lblPhoto, "cell 2 0 1 5,alignx center,growy");
 		
 		JLabel lblTitulo = new JLabel("Titulo");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -138,13 +148,12 @@ public class UI extends JFrame {
 		
 		tableLibrary = new JTable(ALLBITS, 5);
 		scrollPane.setViewportView(tableLibrary);
-		panelCentral.setBackgroundAt(1, new Color(241, 228, 158));
 		
 		panelComprarVender = new JPanel();
 		panelCentral.addTab("Compra y venta", null, panelComprarVender, null);
 		
 		JPanel panelInferior = new JPanel();
-		panelInferior.setBackground(new Color(255, 91, 91));
+		panelInferior.setBackground(new Color(255, 231, 166));
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
 		btnSave = new JButton("Guardar");
@@ -162,6 +171,11 @@ public class UI extends JFrame {
 		
 	}
 	
+	private static ImageIcon resizeIcon(ImageIcon icon, int width, int height) {
+        Image img = icon.getImage();
+        Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImg);
+    }
 	
 	public void vaciarCampos() {
 		textISBN.setText("");

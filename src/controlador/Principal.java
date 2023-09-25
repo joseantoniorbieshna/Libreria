@@ -19,10 +19,10 @@ public class Principal {
 					ParaUI frame = new ParaUI();
 					frame.setVisible(true);
 					
-					frame.setTitle("Winrar Library");
+					frame.setTitle("Libreria J.A Ramos");
 					
 					/*Crear imagen*/
-					BufferedImage image= ImageIO.read(new File("src/recursos/winrar.png"));
+					BufferedImage image= ImageIO.read(new File("src/recursos/librosico.png"));
 					frame.setIconImage(image);
 					
 				} catch (Exception e) {

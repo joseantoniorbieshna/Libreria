@@ -21,25 +21,10 @@ public class ControladorTabla {
 		addComportamientoTabla();
 	}
 	
-	public void addComportamientoTabla() {
-		this.tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				Integer position = tabla.rowAtPoint(e.getPoint());//posicion
-				tabla.setRowSelectionInterval(position, position);// selección
-				
-				seleccionadoIsbnTabla = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
-				if(e.getButton()==3) {
-					JPopupMenu popup = new JPopupMenu("Popup");
-					JMenuItem itemBorrar = new JMenuItem("Borrar");
-					
-					itemBorrar.addActionListener(eventoBorrar->borrarSeleccionado());
-					
-					popup.add(itemBorrar);
-                    popup.show(e.getComponent(), e.getX(), e.getY());
-				}
-			}
-		});
+	public void rellenarTabla() {
+		tabla.setModel(libreria.getFillTableModel());
 	}
+	
 	
 	public void borrarSeleccionado(){
 		if(seleccionadoIsbnTabla!=null && libreria.existe(seleccionadoIsbnTabla)){
@@ -54,7 +39,28 @@ public class ControladorTabla {
 			}
 		}
 	}
-	public void rellenarTabla() {
-		tabla.setModel(libreria.getFillTableModel());
+
+	public void addComportamientoTabla() {
+		this.tabla.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				Integer position = tabla.rowAtPoint(e.getPoint());//posicion
+				tabla.setRowSelectionInterval(position, position);// selección
+				
+				seleccionadoIsbnTabla = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
+				if(e.getButton()==3) {
+					JPopupMenu popup = new JPopupMenu("Popup");
+					JMenuItem itemBorrar = new JMenuItem("Borrar");
+					JMenuItem itemEditar = new JMenuItem("Editar");
+					JMenuItem itemCompraVenta = new JMenuItem("Comprar o vender");
+					
+					itemBorrar.addActionListener(eventoBorrar->borrarSeleccionado());
+					
+					popup.add(itemCompraVenta);
+					popup.add(itemEditar);
+					popup.add(itemBorrar);
+                    popup.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
+		});
 	}
 }
