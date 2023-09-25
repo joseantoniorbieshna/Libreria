@@ -25,22 +25,21 @@ public class UI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	protected JTextField textISBN;
-	protected JTextField textTItulo;
-	protected JTextField textAutor;
-	protected JTextField textEditorial;
-	protected JTextField textPrecio;
-	protected JButton btnSave;
-	protected JButton btnExit;
-	protected JTable tableLibrary;
-	protected JPanel panelLibreria;
-	protected JButton btnDelete;
-	protected JButton btnConsultar;
-	protected JTextField textFormato;
-	protected PanelRadioButton panelFormato;
-	protected PanelRadioButton panelEstado;
-	protected JPanel panelLibro;
-	protected JTabbedPane panelCentral;
+	private JTextField textISBN;
+	private JTextField textTItulo;
+	private JTextField textAutor;
+	private JTextField textEditorial;
+	private JTextField textPrecio;
+	private JButton btnSave;
+	private JButton btnExit;
+	private JTable tableLibrary;
+	private JPanel panelLibreria;
+	private JButton btnDelete;
+	private JButton btnConsultar;
+	private PanelRadioButton panelFormato;
+	private PanelRadioButton panelEstado;
+	private JPanel panelLibro;
+	private JTabbedPane panelCentral;
 	private JPanel panelComprarVender;
 
 
@@ -173,4 +172,83 @@ public class UI extends JFrame {
 		panelFormato.deselectedAll();
 		panelEstado.deselectedAll();
 	}
+
+
+	public JTextField getTextISBN() {
+		return textISBN;
+	}
+
+
+	public JTextField getTextTItulo() {
+		return textTItulo;
+	}
+
+
+	public JTextField getTextAutor() {
+		return textAutor;
+	}
+
+
+	public JTextField getTextEditorial() {
+		return textEditorial;
+	}
+
+
+	public JTextField getTextPrecio() {
+		return textPrecio;
+	}
+
+
+	public JButton getBtnSave() {
+		return btnSave;
+	}
+
+
+	public JButton getBtnExit() {
+		return btnExit;
+	}
+
+
+	public JTable getTableLibrary() {
+		return tableLibrary;
+	}
+
+
+	public JPanel getPanelLibreria() {
+		return panelLibreria;
+	}
+
+
+	public JButton getBtnDelete() {
+		return btnDelete;
+	}
+
+
+	public JButton getBtnConsultar() {
+		return btnConsultar;
+	}
+
+
+	public PanelRadioButton getPanelFormato() {
+		return panelFormato;
+	}
+
+
+	public PanelRadioButton getPanelEstado() {
+		return panelEstado;
+	}
+
+
+	public JPanel getPanelLibro() {
+		return panelLibro;
+	}
+
+
+	public JTabbedPane getPanelCentral() {
+		return panelCentral;
+	}
+	
+	
+	
+	
 }
