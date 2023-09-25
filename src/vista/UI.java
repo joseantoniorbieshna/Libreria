@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Formato;
+import modelo.Libro;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -119,14 +119,14 @@ public class UI extends JFrame {
 		panelLibro.add(formato, "cell 0 5 1 2,grow");
 		
 		
-		panelFormato = new PanelRadioButton(Formato.getAllText());
+		panelFormato = new PanelRadioButton(Libro.FORMATOS);
 		panelFormato.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelLibro.add(panelFormato, "cell 1 5 2 2,growx,aligny center");
 		
 		JLabel lblEstado = new JLabel("Estado:");
 		panelLibro.add(lblEstado, "cell 0 7 1 2,alignx center,growy");
 		
-		panelEstado = new PanelRadioButton(new String[]{"Reedición", "Novedad"});
+		panelEstado = new PanelRadioButton(Libro.ESTADOS);
 		panelLibro.add(panelEstado, "cell 1 7 2 2,growx,aligny center");
 		
 		

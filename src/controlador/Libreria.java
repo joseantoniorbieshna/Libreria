@@ -1,6 +1,7 @@
 package controlador;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -9,7 +10,7 @@ import utilidades.LibroObjectMother;
 
 public class Libreria {
 	private ArrayList<Libro> arrayLibro = new ArrayList<>();
-	private final static String[] nombresColumnas = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO" };
+	private final static String[] nombresColumnas = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO","Estado" };
 	
 	
 	public Libreria() {
@@ -23,6 +24,16 @@ public class Libreria {
 	
 	public void removeLibro(Libro libro) {
 		arrayLibro.remove(libro);
+	}
+	public void removeLibroByIsbn(String isbn) {
+		Iterator<Libro> iterator = arrayLibro.iterator();
+		while (iterator.hasNext()) {
+			Libro libro = (Libro) iterator.next();
+			if(libro.getISBN().equals(isbn)) {
+				iterator.remove();
+				break;
+			}
+		}
 	}
 	
 	public ArrayList<Libro> getLibreria() {
@@ -56,7 +67,7 @@ public class Libreria {
 				filasTabla[i][2] = libroActual.getEditorial();
 				filasTabla[i][3] = libroActual.getAutor();
 				filasTabla[i][4] = String.valueOf(libroActual.getPrecio());
-				filasTabla[i][5] = libroActual.getFormato().getTextoFormato();
+				filasTabla[i][5] = libroActual.getFormato();
 			}
 			DefaultTableModel tableWithFill = new DefaultTableModel(filasTabla,nombresColumnas);
 			return tableWithFill;	

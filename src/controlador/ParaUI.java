@@ -1,19 +1,19 @@
 package controlador;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
-import javafx.scene.control.RadioButton;
-import modelo.Formato;
 import modelo.Libro;
 import utilidades.Validators;
 import vista.UI;
@@ -21,6 +21,7 @@ import vista.UI;
 public class ParaUI extends UI {
 	private Libreria libreria = new Libreria();
 	private JPanel actualSelectedJPanel = panelLibro;
+	private String seleccionadoIsbnTabla;
 
 	public ParaUI() {
 		addComportamientoGuardar();
@@ -34,6 +35,7 @@ public class ParaUI extends UI {
 		comportamientoTextoSinNumerosYSimbolos(textAutor);
 		
 		addBehaviourActualLabel();
+		addComportamientoTabla();
 	}
 
 
@@ -41,7 +43,7 @@ public class ParaUI extends UI {
 		this.btnSave.addActionListener(e -> {
 			if (!textISBN.getText().isEmpty()) {
 				Libro book = new Libro(textISBN.getText(), textTItulo.getText(), textAutor.getText(),
-						textEditorial.getText(), Float.parseFloat(textPrecio.getText()),Formato.getFormatoByTexto(""));
+						textEditorial.getText(), Float.parseFloat(textPrecio.getText()),panelFormato.getTextRButtonSelected());
 				libreria.addLibro(book);
 				vaciarCampos();
 				rellenarTabla();
@@ -60,7 +62,7 @@ public class ParaUI extends UI {
 	public void addComportamientoBorrar() {
 			this.btnDelete.addActionListener(e ->{
 				if(actualSelectedJPanel.equals(panelLibreria)) {
-					System.out.println("Borrar en libreria");
+					borrarSeleccionado();
 				}else {
 					System.out.println("Borrar en libro");
 					vaciarCampos();					
@@ -118,7 +120,7 @@ public class ParaUI extends UI {
 			if (libroExiste && isbn !=null) {
 				Libro libroEncontrado = libreria.getLibroByISBN(isbn);
 				String mensajePanel = "Libro";
-				String mensajeMostrar= libroEncontrado.getMessage();
+				String mensajeMostrar= libroEncontrado.toString();
 				JOptionPane.showMessageDialog(null, mensajeMostrar, mensajePanel, JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if(!libroExiste && isbn !=null) {
@@ -145,5 +147,42 @@ public class ParaUI extends UI {
             }
         );
     }
-
+	
+	
+	private void borrarSeleccionado(){
+		if(seleccionadoIsbnTabla!=null && libreria.existe(seleccionadoIsbnTabla)){
+			String textoMostrar = "Seguro que quieres borrar el libro con los datos:"+"\n"+libreria.getLibroByISBN(seleccionadoIsbnTabla);
+			 int resultado = JOptionPane.showConfirmDialog(this, 
+					 textoMostrar,"BORRADO",
+					 JOptionPane.WARNING_MESSAGE,
+					 JOptionPane.YES_NO_OPTION);
+			if(resultado==JOptionPane.OK_OPTION) {
+				libreria.removeLibroByIsbn(seleccionadoIsbnTabla);
+				rellenarTabla();				
+			}
+		}
+	}
+	
+	public void addComportamientoTabla() {
+		tableLibrary.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				Integer position = tableLibrary.rowAtPoint(e.getPoint());//posicion
+				tableLibrary.setRowSelectionInterval(position, position);// selección
+				
+				seleccionadoIsbnTabla = tableLibrary.getValueAt(tableLibrary.getSelectedRow(), 0).toString();
+				if(e.getButton()==3) {
+					JPopupMenu popup = new JPopupMenu("Popup");
+					JMenuItem itemBorrar = new JMenuItem("Borrar");
+					
+					itemBorrar.addActionListener(eventoBorrar->borrarSeleccionado());
+					
+					popup.add(itemBorrar);
+                    popup.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
+		});
+	}
+	
+	
+	
 }

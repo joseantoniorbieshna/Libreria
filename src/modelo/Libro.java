@@ -6,12 +6,15 @@ public class Libro {
 	private String autor;
 	private String editorial;
 	private Float precio;
-	private Formato formato;
+	private String formato;
+	
+	public static final String[] FORMATOS = {"Cartoné","Rústico","Grapada","Espiral"};
+	public static final String[] ESTADOS = {"Reedición", "Novedad"};
 	
 	
 	public Libro() {}
 
-	public Libro(String iSBN, String titulo, String autor, String editorial, Float precio, Formato formato) {
+	public Libro(String iSBN, String titulo, String autor, String editorial, Float precio, String formato) {
 		super();
 		this.ISBN = iSBN;
 		this.titulo = titulo;
@@ -70,27 +73,19 @@ public class Libro {
 	public void setPrecio(Float precio) {
 		this.precio = precio;
 	}
-
-	public String getMessage() {
-		return "ISBN: " + getISBN() + "\n" + "TITULO: " + getTitulo() + "\n" + "AUTOR: " + getAutor() + "\n"
-				+ "EDITORIAL: " + getEditorial() + "\n"+"PRECIO: " + String.valueOf(getPrecio())+ "\n" + 
-				"FORMATO: "+ getTextoFormato();
-	}
 	
 
-	public Formato getFormato() {
+	public String getFormato() {
 		return formato;
 	}
-	public String getTextoFormato() {
-		return formato.getTextoFormato();
-	}
-	public void setFormato(Formato formato) {
+	public void setFormato(String formato) {
 		this.formato = formato;
 	}
 	@Override
 	public String toString() {
-		return "Libro [ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial
-				+ ", precio=" + precio + "]";
+		return "ISBN: " + getISBN() + "\n" + "TITULO: " + getTitulo() + "\n" + "AUTOR: " + getAutor() + "\n"
+				+ "EDITORIAL: " + getEditorial() + "\n"+"PRECIO: " + String.valueOf(getPrecio())+ "\n" + 
+				"FORMATO: "+ getFormato();
 	}
 
 }
