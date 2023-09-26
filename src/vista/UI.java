@@ -4,8 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Libro;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -22,6 +20,8 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.border.LineBorder;
 
 import controlador.PanelRadioButton;
+import modelo.data.Libro;
+
 import javax.swing.ImageIcon;
 
 public class UI extends JFrame {

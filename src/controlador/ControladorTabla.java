@@ -10,6 +10,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import modelo.repository.Libreria;
+
 public class ControladorTabla {
 	private JTable tabla;
 	private String seleccionadoIsbnTabla;
@@ -40,38 +42,40 @@ public class ControladorTabla {
 
 	public void addComportamientoTabla() {
 		this.tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
-		MouseListener[] allMouseListeners = this.tabla.getMouseListeners();
-		this.tabla.removeMouseListener(allMouseListeners[allMouseListeners.length-1]);// remover el listener por default
 
-		
-		
+		MouseListener[] allMouseListeners = this.tabla.getMouseListeners();
+		this.tabla.removeMouseListener(allMouseListeners[allMouseListeners.length - 1]);// remover el listener por
+																						// default
+
 		this.tabla.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				Integer position = tabla.rowAtPoint(e.getPoint());// posicion
 				if (position != -1) {
 					tabla.setRowSelectionInterval(position, position);// selección
+					tabla.setColumnSelectionInterval(0, tabla.getColumnCount() - 1);
 				}
-				position=tabla.getSelectedRow();
-				tabla.setRowSelectionInterval(position, position);
-				
-				seleccionadoIsbnTabla = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
-					if (e.getButton() == 3) {
-						JPopupMenu popup = new JPopupMenu("Popup");
-						JMenuItem itemBorrar = new JMenuItem("Borrar");
-						JMenuItem itemEditar = new JMenuItem("Editar");
-						JMenuItem itemCompraVenta = new JMenuItem("Comprar o vender");
 
-						itemBorrar.addActionListener(eventoBorrar -> borrarSeleccionado());
+				if (tabla.getSelectedColumn() != -1 && tabla.getSelectedRow() != -1 && e.getButton() == 3) {
 
-						popup.add(itemCompraVenta);
-						popup.add(itemEditar);
-						popup.add(itemBorrar);
-						popup.show(e.getComponent(), e.getX(), e.getY());
-					}
-				
+					seleccionadoIsbnTabla = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
+					
+					JPopupMenu popup = new JPopupMenu("Popup");
+					JMenuItem itemBorrar = new JMenuItem("Borrar");
+					JMenuItem itemEditar = new JMenuItem("Editar");
+					JMenuItem itemCompraVenta = new JMenuItem("Comprar o vender");
+
+					itemBorrar.addActionListener(eventoBorrar -> borrarSeleccionado());
+
+					popup.add(itemCompraVenta);
+					popup.add(itemEditar);
+					popup.add(itemBorrar);
+					popup.show(e.getComponent(), e.getX(), e.getY());
+
+				}
+
 			}
 		});
+
 	}
 
 	private Libreria getLibreria() {

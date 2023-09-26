@@ -5,19 +5,20 @@ package controlador;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import modelo.Libro;
+import modelo.data.Libro;
+import modelo.repository.Libreria;
 import vista.UI;
 
 public class ParaUI extends UI {
 	private Libreria libreria = new Libreria();
 	
-	private ControlerTextFields controlerTextField;
+	private ControladorTextFields controlerTextField;
 	private ControladorTabla controladorTabla;
 
 	private JPanel actualSelectedJPanel = getPanelLibreria();
 
 	public ParaUI() {
-		controlerTextField = new ControlerTextFields();
+		controlerTextField = new ControladorTextFields();
 		controladorTabla = new ControladorTabla(getTableLibrary(), this);
 		
 		controlerTextField.annadirComportamientoTextoIsbn(getTextISBN());

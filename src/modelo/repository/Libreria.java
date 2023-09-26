@@ -1,11 +1,11 @@
-package controlador;
+package modelo.repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.table.DefaultTableModel;
 
-import modelo.Libro;
+import modelo.data.Libro;
 import utilidades.LibroObjectMother;
 
 public class Libreria {

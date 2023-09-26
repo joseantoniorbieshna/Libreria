@@ -7,11 +7,11 @@ import javax.swing.JTextField;
 import utilidades.Validators;
 import vista.UI;
 
-public class ControlerTextFields {
+public class ControladorTextFields {
 	
 	private static int LONGITUD_ISBN=13;
 	
-	public ControlerTextFields() {
+	public ControladorTextFields() {
 	}
 
 	public void annadirComportamientoTextoIsbn(JTextField textField) {
