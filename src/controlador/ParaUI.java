@@ -1,9 +1,7 @@
 package controlador;
 
 
-import java.awt.Image;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -33,7 +31,7 @@ public class ParaUI extends UI {
 		addComportamientoConsultar();
 		addComportamientoBorrar();
 		addComportamientoSalir();
-		addBehaviourActualLabel();
+		addComportamientoRefrescarCenterLabel();
 	}
 
 
@@ -84,7 +82,7 @@ public class ParaUI extends UI {
 		});
 	}
 	
-	public void addBehaviourActualLabel() {
+	public void addComportamientoRefrescarCenterLabel() {
         getPanelCentral().addChangeListener(e->{
                 if(getPanelLibro().isVisible()) {
                     actualSelectedJPanel = getPanelLibro();

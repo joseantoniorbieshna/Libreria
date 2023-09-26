@@ -10,7 +10,7 @@ import utilidades.LibroObjectMother;
 
 public class Libreria {
 	private ArrayList<Libro> arrayLibro = new ArrayList<>();
-	private final static String[] nombresColumnas = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO","Estado" };
+	private final static String[] nombresColumnas = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO","ESTADO" };
 	
 	
 	public Libreria() {

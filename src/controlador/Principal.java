@@ -19,7 +19,7 @@ public class Principal {
 					ParaUI frame = new ParaUI();
 					frame.setVisible(true);
 					
-					frame.setTitle("Libreria J.A Ramos");
+					frame.setTitle("Libreria Jose Antonio Ramos");
 					
 					/*Crear imagen*/
 					BufferedImage image= ImageIO.read(new File("src/recursos/librosico.png"));
