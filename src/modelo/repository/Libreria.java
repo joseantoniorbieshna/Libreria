@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.data.Libro;
@@ -61,6 +63,7 @@ public class Libreria {
 		return existe;
 	}
 	
+	
 	public DefaultTableModel getFillTableModel() {
 			String[][] filasTabla = new String[getLibreria().size()][6];
 			for (int i = 0; i < this.getLibreria().size(); i++) {
@@ -76,5 +79,23 @@ public class Libreria {
 			DefaultTableModel tableWithFill = new DefaultTableModel(filasTabla,Libro.CAMPOS);
 			return tableWithFill;	
 	}
+	
+	private int crearMensajeConfirmaciónBorrar(String isbn, JFrame jframe) {
+		String textoMostrar = "SEGURO QUE QUIERES BORRAR EL LIBRO:" + "\n" + "\n"
+				+ getLibroByISBN(isbn) + "\n" + "\n";
+		int resultado = JOptionPane.showConfirmDialog(jframe, textoMostrar, "BORRAR", JOptionPane.WARNING_MESSAGE,
+				JOptionPane.YES_NO_OPTION);
+		return resultado;
+	}
+	
+	public void pedirConfirmacionBorrarPorIsbn(String isbn, JFrame jframe) {
+		if (existe(isbn)) {
+			int resultado = crearMensajeConfirmaciónBorrar(isbn,jframe);
+			if (resultado == JOptionPane.OK_OPTION) {
+				removeLibroByIsbn(isbn);
+			}
+		}
+	}
+	
 }
 	

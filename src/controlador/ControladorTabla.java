@@ -1,5 +1,8 @@
 package controlador;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,28 +19,29 @@ public class ControladorTabla {
 	private JTable tabla;
 	private String seleccionadoIsbnTabla;
 	private ParaUI gui;
+	JMenuItem itemBorrar;
+	JMenuItem itemCopiarIsbn;
+	JMenuItem itemEditar;
+	JMenuItem itemCompraVenta;
 
 	public ControladorTabla(JTable tabla, ParaUI gui) {
 		this.tabla = tabla;
 		this.gui = gui;
 		addComportamientoTabla();
+		itemCopiarIsbn = new JMenuItem("Copiar isbn");
+		itemBorrar = new JMenuItem("Borrar");
+		itemEditar = new JMenuItem("Editar");
+		itemCompraVenta = new JMenuItem("Comprar o vender");
+		
+		addComportamientoCopiarISBN();
 	}
 
 	public void rellenarTabla() {
 		tabla.setModel(getLibreria().getFillTableModel());
 	}
 
-	public void borrarSeleccionado() {
-		if (seleccionadoIsbnTabla != null && getLibreria().existe(seleccionadoIsbnTabla)) {
-			String textoMostrar = "SEGURO QUE QUIERES BORRAR EL LIBRO:" + "\n" + "\n"
-					+ getLibreria().getLibroByISBN(seleccionadoIsbnTabla) + "\n" + "\n";
-			int resultado = JOptionPane.showConfirmDialog(gui, textoMostrar, "BORRAR", JOptionPane.WARNING_MESSAGE,
-					JOptionPane.YES_NO_OPTION);
-			if (resultado == JOptionPane.OK_OPTION) {
-				getLibreria().removeLibroByIsbn(seleccionadoIsbnTabla);
-				rellenarTabla();
-			}
-		}
+	public void borrarSeleccionsado() {
+			getLibreria().removeLibroByIsbn(seleccionadoIsbnTabla);
 	}
 
 	public void addComportamientoTabla() {
@@ -45,37 +49,57 @@ public class ControladorTabla {
 
 		MouseListener[] allMouseListeners = this.tabla.getMouseListeners();
 		this.tabla.removeMouseListener(allMouseListeners[allMouseListeners.length - 1]);// remover el listener por
-																						// default
-
+		
+		
 		this.tabla.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				Integer position = tabla.rowAtPoint(e.getPoint());// posicion
+				
 				if (position != -1) {
 					tabla.setRowSelectionInterval(position, position);// selección
 					tabla.setColumnSelectionInterval(0, tabla.getColumnCount() - 1);
 				}
-
+				
 				if (tabla.getSelectedColumn() != -1 && tabla.getSelectedRow() != -1 && e.getButton() == 3) {
 
 					seleccionadoIsbnTabla = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
 					
 					JPopupMenu popup = new JPopupMenu("Popup");
-					JMenuItem itemBorrar = new JMenuItem("Borrar");
-					JMenuItem itemEditar = new JMenuItem("Editar");
-					JMenuItem itemCompraVenta = new JMenuItem("Comprar o vender");
 
-					itemBorrar.addActionListener(eventoBorrar -> borrarSeleccionado());
-
+					
+					popup.add(itemCopiarIsbn);
 					popup.add(itemCompraVenta);
 					popup.add(itemEditar);
 					popup.add(itemBorrar);
 					popup.show(e.getComponent(), e.getX(), e.getY());
-
 				}
-
 			}
 		});
 
+	}
+	
+	private void addComportamientoCopiarISBN() {
+		itemCopiarIsbn.addActionListener(elemento->{
+			StringSelection strSel = new StringSelection(seleccionadoIsbnTabla);
+	        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+	        cb.setContents(strSel, null);
+		});
+	}
+
+	public JMenuItem getItemBorrar() {
+		return itemBorrar;
+	}
+
+	public JMenuItem getItemEditar() {
+		return itemEditar;
+	}
+
+	public JMenuItem getItemCompraVenta() {
+		return itemCompraVenta;
+	}
+
+	public String getSeleccionadoIsbnTabla() {
+		return seleccionadoIsbnTabla;
 	}
 
 	private Libreria getLibreria() {

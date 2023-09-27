@@ -2,6 +2,7 @@ package controlador;
 
 
 
+import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -32,7 +33,8 @@ public class ParaUI extends UI {
 		
 		addComportamientoGuardar();
 		addComportamientoConsultar();
-		addComportamientoBorrar();
+		addComportamientoBorrar(getBtnDelete());
+		addComportamientoBorrar(controladorTabla.getItemBorrar());
 		addComportamientoSalir();
 		addComportamientoRefrescarCenterLabel();
 	}
@@ -40,7 +42,7 @@ public class ParaUI extends UI {
 
 	public void addComportamientoGuardar() {
 		this.getBtnSave().addActionListener(e -> {
-			if (estanTodosCamposLlenos()) {
+			if (estanTodosCamposLlenos() && getTextISBN().getText().length()==13) {
 				Libro book = new Libro(getTextISBN().getText(), getTextTItulo().getText(), getTextAutor().getText(),
 						getTextEditorial().getText(), Float.parseFloat(getTextPrecio().getText()),getPanelFormato().getTextRButtonSelected(),Libro.FORMATOS[1]);
 				libreria.addLibro(book);
@@ -56,10 +58,13 @@ public class ParaUI extends UI {
 		this.getBtnExit().addActionListener(e -> dispose());
 	}
 
-	public void addComportamientoBorrar() {
-			this.getBtnDelete().addActionListener(e ->{
+	public void addComportamientoBorrar(AbstractButton myComponent) {
+		myComponent.addActionListener(e ->{
 				if(actualSelectedJPanel.equals(getPanelLibreria())) {
-					controladorTabla.borrarSeleccionado();
+					String isbn= controladorTabla.getSeleccionadoIsbnTabla();
+					if(isbn!=null) {
+						getLibreria().pedirConfirmacionBorrarPorIsbn(isbn, this);						
+					}
 				}else {
 					vaciarCampos();					
 				}
@@ -91,16 +96,15 @@ public class ParaUI extends UI {
                     actualSelectedJPanel = getPanelLibro();
                     
                     getBtnSave().setVisible(true);
-                    getBtnConsultar().setVisible(true);
                 }else if(getPanelLibreria().isVisible()){
                     actualSelectedJPanel = getPanelLibreria();
                     
                     getBtnSave().setVisible(false);
-                    getBtnConsultar().setVisible(false);
                 }
             }
         );
-    }
+	}
+    
 	
 
 	private boolean estanTodosCamposLlenos() {
@@ -111,7 +115,6 @@ public class ParaUI extends UI {
 		}
 		return false;
 	}
-
 
 	public Libreria getLibreria() {
 		return libreria;
