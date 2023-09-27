@@ -6,6 +6,8 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
@@ -23,6 +25,8 @@ import controlador.PanelRadioButton;
 import modelo.data.Libro;
 
 import javax.swing.ImageIcon;
+import java.awt.GridLayout;
+import javax.swing.JSpinner;
 
 public class UI extends JFrame {
 
@@ -45,6 +49,12 @@ public class UI extends JFrame {
 	private JTabbedPane panelCentral;
 	private JPanel panelComprarVender;
 	private JLabel lblPhoto;
+	private PanelRadioButton jPanelButtonCompraVenta;
+	private JSpinner spinner;
+	private JTextField textIsbnCompraVenta;
+	private JTextField textTituloCompraVenta;
+	private JLabel textPrecioCompraVenta;
+	private JLabel lblTotalCompraVenta;
 
 
 	/**
@@ -151,6 +161,56 @@ public class UI extends JFrame {
 		
 		panelComprarVender = new JPanel();
 		panelCentral.addTab("Compra y venta", null, panelComprarVender, null);
+		panelComprarVender.setLayout(new MigLayout("", "[50%,grow][50%,grow][]", "[28px][28px][28px][28px][28px][28px]"));
+		
+		JLabel lblIsbnCompraVenta = new JLabel("ISBN");
+		lblIsbnCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(lblIsbnCompraVenta, "cell 0 0,grow");
+		
+		textIsbnCompraVenta = new JTextField();
+		textIsbnCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		textIsbnCompraVenta.setEditable(false);
+		textIsbnCompraVenta.setText("-");
+		panelComprarVender.add(textIsbnCompraVenta, "cell 1 0,grow");
+		
+		JLabel lblTituloCompraVenta = new JLabel("Titulo");
+		lblTituloCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(lblTituloCompraVenta, "cell 0 1,grow");
+		
+		textTituloCompraVenta = new JTextField();
+		textTituloCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		textTituloCompraVenta.setText("-");
+		textTituloCompraVenta.setEditable(false);
+		panelComprarVender.add(textTituloCompraVenta, "cell 1 1,grow");
+		textTituloCompraVenta.setColumns(10);
+		
+		JLabel lblPrecioCompraYVenta = new JLabel("Precio");
+		lblPrecioCompraYVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(lblPrecioCompraYVenta, "cell 0 2,grow");
+		
+		textPrecioCompraVenta = new JLabel("-");
+		textPrecioCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(textPrecioCompraVenta, "cell 1 2,grow");
+		
+		jPanelButtonCompraVenta = new PanelRadioButton(new String[]{"Vender","Comprar"});
+		jPanelButtonCompraVenta.setSelectByText("Vender");
+		
+		panelComprarVender.add(jPanelButtonCompraVenta, "cell 0 4 2 1,grow");
+		
+		JLabel lblNumeroCompraVenta = new JLabel("N\u00FAmero de articulos");
+		panelComprarVender.add(lblNumeroCompraVenta, "cell 0 3,alignx center");
+		
+		spinner = new JSpinner();
+		spinner.setPreferredSize(new Dimension(50,25));
+		panelComprarVender.add(spinner, "cell 1 3,alignx left");
+		
+		JLabel textTotal = new JLabel("TOTAL:");
+		textTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(textTotal, "cell 0 5,grow");
+		
+		lblTotalCompraVenta = new JLabel("-");
+		lblTotalCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(lblTotalCompraVenta, "cell 1 5,grow");
 		
 		JPanel panelInferior = new JPanel();
 		panelInferior.setBackground(new Color(255, 231, 166));
@@ -261,6 +321,25 @@ public class UI extends JFrame {
 	public JTabbedPane getPanelCentral() {
 		return panelCentral;
 	}
+
+	public PanelRadioButton getJpanelButtonCompraVenta() {
+		return jPanelButtonCompraVenta;
+	}
+
+	public JTextField getTextIsbnCompraVenta() {
+		return textIsbnCompraVenta;
+	}
+
+	public JLabel getTextPrecioCompraVenta() {
+		return textPrecioCompraVenta;
+	}
+
+	public JLabel getLblTotalCompraVenta() {
+		return lblTotalCompraVenta;
+	}
+	
+	
+	
 	
 	
 	

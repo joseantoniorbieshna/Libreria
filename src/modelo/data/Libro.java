@@ -7,14 +7,16 @@ public class Libro {
 	private String editorial;
 	private Float precio;
 	private String formato;
+	private String estado;
 	
+	public final static String[] CAMPOS = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO","ESTADO" };
 	public static final String[] FORMATOS = {"Cartoné","Rústico","Grapada","Espiral"};
 	public static final String[] ESTADOS = {"Reedición", "Novedad"};
 	
 	
 	public Libro() {}
 
-	public Libro(String iSBN, String titulo, String autor, String editorial, Float precio, String formato) {
+	public Libro(String iSBN, String titulo, String autor, String editorial, Float precio, String formato, String estado) {
 		super();
 		this.ISBN = iSBN;
 		this.titulo = titulo;
@@ -31,6 +33,7 @@ public class Libro {
 		this.editorial = libro.getEditorial();
 		this.precio = libro.getPrecio();
 		this.formato = libro.getFormato();
+		this.estado = libro.getEstado();
 		
 	}
 
@@ -81,6 +84,17 @@ public class Libro {
 	public void setFormato(String formato) {
 		this.formato = formato;
 	}
+	
+	
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public String toString() {
 		return "ISBN: " + getISBN() + "\n" + "TITULO: " + getTitulo() + "\n" + "AUTOR: " + getAutor() + "\n"

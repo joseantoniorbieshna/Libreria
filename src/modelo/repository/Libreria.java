@@ -2,6 +2,7 @@ package modelo.repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -9,12 +10,15 @@ import modelo.data.Libro;
 import utilidades.LibroObjectMother;
 
 public class Libreria {
-	private ArrayList<Libro> arrayLibro = new ArrayList<>();
-	private final static String[] nombresColumnas = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO","ESTADO" };
+	private List<Libro> arrayLibro = new ArrayList<>();
+	
 	
 	
 	public Libreria() {
 		arrayLibro = (ArrayList<Libro>) LibroObjectMother.getList();
+	}
+	public Libreria(List<Libro> arrayLibro ) {
+		this.arrayLibro = arrayLibro;
 	}
 	
 	
@@ -36,7 +40,7 @@ public class Libreria {
 		}
 	}
 	
-	public ArrayList<Libro> getLibreria() {
+	public List<Libro> getLibreria() {
 		return arrayLibro;
 	}
 	
@@ -69,7 +73,7 @@ public class Libreria {
 				filasTabla[i][4] = String.valueOf(libroActual.getPrecio());
 				filasTabla[i][5] = libroActual.getFormato();
 			}
-			DefaultTableModel tableWithFill = new DefaultTableModel(filasTabla,nombresColumnas);
+			DefaultTableModel tableWithFill = new DefaultTableModel(filasTabla,Libro.CAMPOS);
 			return tableWithFill;	
 	}
 }

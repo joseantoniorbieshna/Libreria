@@ -31,7 +31,7 @@ public class ControladorTabla {
 		if (seleccionadoIsbnTabla != null && getLibreria().existe(seleccionadoIsbnTabla)) {
 			String textoMostrar = "SEGURO QUE QUIERES BORRAR EL LIBRO:" + "\n" + "\n"
 					+ getLibreria().getLibroByISBN(seleccionadoIsbnTabla) + "\n" + "\n";
-			int resultado = JOptionPane.showConfirmDialog(gui, textoMostrar, "BORRADO", JOptionPane.WARNING_MESSAGE,
+			int resultado = JOptionPane.showConfirmDialog(gui, textoMostrar, "BORRAR", JOptionPane.WARNING_MESSAGE,
 					JOptionPane.YES_NO_OPTION);
 			if (resultado == JOptionPane.OK_OPTION) {
 				getLibreria().removeLibroByIsbn(seleccionadoIsbnTabla);

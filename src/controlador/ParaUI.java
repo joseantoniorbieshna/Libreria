@@ -14,12 +14,14 @@ public class ParaUI extends UI {
 	
 	private ControladorTextFields controlerTextField;
 	private ControladorTabla controladorTabla;
+	private ControladorCompraVenta controladorCompraVenta;
 
 	private JPanel actualSelectedJPanel = getPanelLibreria();
 
 	public ParaUI() {
 		controlerTextField = new ControladorTextFields();
 		controladorTabla = new ControladorTabla(getTableLibrary(), this);
+		controladorCompraVenta = new ControladorCompraVenta(this);
 		
 		controlerTextField.annadirComportamientoTextoIsbn(getTextISBN());
 		controlerTextField.annadirComportamientoTextoNumeroReal(getTextPrecio());
@@ -40,7 +42,7 @@ public class ParaUI extends UI {
 		this.getBtnSave().addActionListener(e -> {
 			if (estanTodosCamposLlenos()) {
 				Libro book = new Libro(getTextISBN().getText(), getTextTItulo().getText(), getTextAutor().getText(),
-						getTextEditorial().getText(), Float.parseFloat(getTextPrecio().getText()),getPanelFormato().getTextRButtonSelected());
+						getTextEditorial().getText(), Float.parseFloat(getTextPrecio().getText()),getPanelFormato().getTextRButtonSelected(),Libro.FORMATOS[1]);
 				libreria.addLibro(book);
 				vaciarCampos();
 				controladorTabla.rellenarTabla();

@@ -11,11 +11,14 @@ import javax.swing.JRadioButton;
 
 public class PanelRadioButton extends JPanel{
 	private List<JRadioButton> radioButtons = new ArrayList<JRadioButton>();
+	private Boolean oneIsOBligatory=false;
 	
 	public PanelRadioButton(String[] textoBotones) {
 		super();
 		generarBotonesPorNombre(textoBotones);
 	}
+	
+	
 
 	private void generarBotonesPorNombre(String[] textoBotones) {
 		for(String textoBoton: textoBotones) {
@@ -34,6 +37,14 @@ public class PanelRadioButton extends JPanel{
 		}
 		return null;
 	}
+	public void setSelectByText(String text) {
+		Iterator<JRadioButton> iterator = radioButtons.iterator();
+		while(iterator.hasNext()) {
+			JRadioButton boton = iterator.next();
+			if(boton.getText().equals(text))
+				boton.setSelected(true);
+		}
+	}
 	
 	public void deselectedAll() {
 		Iterator<JRadioButton> iterator = radioButtons.iterator();
@@ -50,8 +61,12 @@ public class PanelRadioButton extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				radioButtons.forEach((boton)->{
-					if(boton!=e.getSource())
-						((JRadioButton)boton).setSelected(false);//borrar demas seleccionado
+					if(boton!=e.getSource()) {
+						((JRadioButton)boton).setSelected(false);//borrar demas seleccionado						
+					}						
+					else {
+						((JRadioButton)boton).setSelected(true);
+					}
 				});
 			}
 		};
