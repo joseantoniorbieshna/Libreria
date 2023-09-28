@@ -337,6 +337,14 @@ public class UI extends JFrame {
 	public JLabel getLblTotalCompraVenta() {
 		return lblTotalCompraVenta;
 	}
+
+	public JPanel getPanelComprarVender() {
+		return panelComprarVender;
+	}
+
+	public JTextField getTextTituloCompraVenta() {
+		return textTituloCompraVenta;
+	}
 	
 	
 	

@@ -35,8 +35,9 @@ public class ParaUI extends UI {
 		addComportamientoConsultar();
 		addComportamientoBorrar(getBtnDelete());
 		addComportamientoBorrar(controladorTabla.getItemBorrar());
+		addComportamientoLlevarAPanelCompraVenta(controladorTabla.getItemCompraVenta());
 		addComportamientoSalir();
-		addComportamientoRefrescarCenterLabel();
+		addComportamientoGuardarPanelCentralActual();
 	}
 
 
@@ -71,6 +72,22 @@ public class ParaUI extends UI {
 				
 			});						
 		}
+	
+	public void addComportamientoLlevarAPanelCompraVenta(AbstractButton myComponent) {
+		myComponent.addActionListener(e ->{
+			String isbnSelececcionado = controladorTabla.getSeleccionadoIsbnTabla();
+			
+			if(isbnSelececcionado!=null && libreria.existe(isbnSelececcionado)) {
+				getPanelCentral().setSelectedComponent(getPanelComprarVender());
+				Libro libro = libreria.getLibroByISBN(isbnSelececcionado);
+				getTextIsbnCompraVenta().setText(libro.getISBN());
+				getTextTituloCompraVenta().setText(libro.getTitulo());
+				getTextPrecioCompraVenta().setText(libro.getPrecio().toString());
+				
+			}
+				
+			});						
+		}
 
 	public void addComportamientoConsultar() {
 		this.getBtnConsultar().addActionListener(e -> {
@@ -90,17 +107,23 @@ public class ParaUI extends UI {
 		});
 	}
 	
-	public void addComportamientoRefrescarCenterLabel() {
+	public void addComportamientoGuardarPanelCentralActual() {
         getPanelCentral().addChangeListener(e->{
+        	
                 if(getPanelLibro().isVisible()) {
-                    actualSelectedJPanel = getPanelLibro();
                     
                     getBtnSave().setVisible(true);
+                    getBtnConsultar().setVisible(true);
                 }else if(getPanelLibreria().isVisible()){
-                    actualSelectedJPanel = getPanelLibreria();
                     
                     getBtnSave().setVisible(false);
+                    getBtnConsultar().setVisible(false);
+                }else if(getPanelComprarVender().isVisible()){
+                	
+                    getBtnSave().setVisible(false);
+                    getBtnConsultar().setVisible(false);
                 }
+                actualSelectedJPanel = getPanelLibreria();
             }
         );
 	}
