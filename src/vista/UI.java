@@ -27,6 +27,7 @@ import modelo.data.Libro;
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class UI extends JFrame {
 
@@ -50,11 +51,14 @@ public class UI extends JFrame {
 	private JPanel panelComprarVender;
 	private JLabel lblPhoto;
 	private PanelRadioButton jPanelButtonCompraVenta;
-	private JSpinner spinner;
 	private JTextField textIsbnCompraVenta;
 	private JTextField textTituloCompraVenta;
 	private JLabel textPrecioCompraVenta;
 	private JLabel lblTotalCompraVenta;
+	private JLabel lblNewLabel;
+	private JSpinner spinnerNumeroArticulos;
+	private JLabel textCantidadCompraVenta;
+	private JButton btnEditar;
 
 
 	/**
@@ -86,7 +90,7 @@ public class UI extends JFrame {
 		panelLibro = new JPanel();
 		panelLibro.setBackground(new Color(255, 251, 235));
 		panelCentral.addTab("Libro", null, panelLibro, null);
-		panelLibro.setLayout(new MigLayout("insets 1%,gap rel 0.5%", "[20%,grow][40%,grow][40%,grow]", "[28px][28px][28px][28px][28px][28px][28px][28px][28px]"));
+		panelLibro.setLayout(new MigLayout("", "[20%,grow][40%,grow][40%,grow]", "[12.5%][12.5%][12.5%][12.5%][12.5%][12.5%][12.5%][12.5%]"));
 		
 		JLabel lblISBN = new JLabel("ISBN");
 		lblISBN.setHorizontalAlignment(SwingConstants.CENTER);
@@ -135,18 +139,22 @@ public class UI extends JFrame {
 		
 		JLabel formato = new JLabel("Formato");
 		formato.setHorizontalAlignment(SwingConstants.CENTER);
-		panelLibro.add(formato, "cell 0 5 1 2,grow");
+		panelLibro.add(formato, "cell 0 5,grow");
 		
 		
 		panelFormato = new PanelRadioButton(Libro.FORMATOS);
 		panelFormato.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelLibro.add(panelFormato, "cell 1 5 2 2,growx,aligny center");
+		panelLibro.add(panelFormato, "cell 1 5 2 1,grow");
 		
 		JLabel lblEstado = new JLabel("Estado:");
-		panelLibro.add(lblEstado, "cell 0 7 1 2,alignx center,growy");
+		panelLibro.add(lblEstado, "cell 0 6,alignx center,growy");
 		
 		panelEstado = new PanelRadioButton(Libro.ESTADOS);
-		panelLibro.add(panelEstado, "cell 1 7 2 2,growx,aligny center");
+		panelLibro.add(panelEstado, "cell 1 6 2 1,grow");
+		
+		lblNewLabel = new JLabel("Cantidad");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panelLibro.add(lblNewLabel, "cell 0 7,grow");
 		
 		
 		panelLibreria = new JPanel();
@@ -161,7 +169,7 @@ public class UI extends JFrame {
 		
 		panelComprarVender = new JPanel();
 		panelCentral.addTab("Compra y venta", null, panelComprarVender, null);
-		panelComprarVender.setLayout(new MigLayout("", "[50%,grow][50%,grow][]", "[28px][28px][28px][28px][28px][28px]"));
+		panelComprarVender.setLayout(new MigLayout("", "[50%,grow][50%,grow][]", "[28px][28px][28px][28px][28px][28px][28px]"));
 		
 		JLabel lblIsbnCompraVenta = new JLabel("ISBN");
 		lblIsbnCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -192,25 +200,34 @@ public class UI extends JFrame {
 		textPrecioCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
 		panelComprarVender.add(textPrecioCompraVenta, "cell 1 2,grow");
 		
+		JLabel lblCantidadCompraVenta = new JLabel("Cantidad:");
+		lblCantidadCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(lblCantidadCompraVenta, "cell 0 3,grow");
+		
+		textCantidadCompraVenta = new JLabel("-");
+		textCantidadCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(textCantidadCompraVenta, "cell 1 3,grow");
+		
 		jPanelButtonCompraVenta = new PanelRadioButton(new String[]{"Vender","Comprar"});
 		jPanelButtonCompraVenta.setSelectByText("Vender");
 		
-		panelComprarVender.add(jPanelButtonCompraVenta, "cell 0 4 2 1,grow");
+		panelComprarVender.add(jPanelButtonCompraVenta, "cell 0 5 2 1,grow");
 		
 		JLabel lblNumeroCompraVenta = new JLabel("N\u00FAmero de articulos");
-		panelComprarVender.add(lblNumeroCompraVenta, "cell 0 3,alignx center");
+		panelComprarVender.add(lblNumeroCompraVenta, "cell 0 4,alignx center");
 		
-		spinner = new JSpinner();
-		spinner.setPreferredSize(new Dimension(50,25));
-		panelComprarVender.add(spinner, "cell 1 3,alignx left");
+		spinnerNumeroArticulos =  new JSpinner();
+		spinnerNumeroArticulos.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+		spinnerNumeroArticulos.setPreferredSize(new Dimension(50,25));
+		panelComprarVender.add(spinnerNumeroArticulos, "cell 1 4,alignx left");
 		
 		JLabel textTotal = new JLabel("TOTAL:");
 		textTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		panelComprarVender.add(textTotal, "cell 0 5,grow");
+		panelComprarVender.add(textTotal, "cell 0 6,grow");
 		
 		lblTotalCompraVenta = new JLabel("-");
 		lblTotalCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
-		panelComprarVender.add(lblTotalCompraVenta, "cell 1 5,grow");
+		panelComprarVender.add(lblTotalCompraVenta, "cell 1 6,grow");
 		
 		JPanel panelInferior = new JPanel();
 		panelInferior.setBackground(new Color(255, 231, 166));
@@ -221,6 +238,9 @@ public class UI extends JFrame {
 		
 		btnConsultar = new JButton("Consulatar");
 		panelInferior.add(btnConsultar);
+		
+		btnEditar = new JButton("Editar");
+		panelInferior.add(btnEditar);
 		
 		btnDelete = new JButton("Borrar");
 		panelInferior.add(btnDelete);
@@ -237,7 +257,7 @@ public class UI extends JFrame {
         return new ImageIcon(resizedImg);
     }
 	
-	public void vaciarCampos() {
+	public void vaciarCamposLibro() {
 		textISBN.setText("");
 		textAutor.setText("");
 		textTItulo.setText("");
@@ -247,68 +267,77 @@ public class UI extends JFrame {
 		panelEstado.deselectedAll();
 	}
 
+	
+	public void vaciarCamposCompraVenta() {
+		getTextIsbnCompraVenta().setText("-");
+		getTextPrecioCompraVenta().setText("-");
+		getLblTotalCompraVenta().setText("-");
+		getTextCantidadCompraVenta().setText("-");
+		getTextTituloCompraVenta().setText("-");
+		getSpinnerNumeroArticulos().setValue(0);
+	}
 
-	public JTextField getTextISBN() {
+	protected JTextField getTextISBN() {
 		return textISBN;
 	}
 
 
-	public JTextField getTextTItulo() {
+	protected JTextField getTextTItulo() {
 		return textTItulo;
 	}
 
 
-	public JTextField getTextAutor() {
+	protected JTextField getTextAutor() {
 		return textAutor;
 	}
 
 
-	public JTextField getTextEditorial() {
+	protected JTextField getTextEditorial() {
 		return textEditorial;
 	}
 
 
-	public JTextField getTextPrecio() {
+	protected JTextField getTextPrecio() {
 		return textPrecio;
 	}
 
 
-	public JButton getBtnSave() {
+	protected JButton getBtnSave() {
 		return btnSave;
 	}
 
 
-	public JButton getBtnExit() {
+	protected JButton getBtnExit() {
 		return btnExit;
 	}
 
 
-	public JTable getTableLibrary() {
+	protected JTable getTableLibrary() {
 		return tableLibrary;
 	}
 
 
-	public JPanel getPanelLibreria() {
+	protected JPanel getPanelLibreria() {
 		return panelLibreria;
 	}
 
 
-	public JButton getBtnDelete() {
+	protected JButton getBtnDelete() {
 		return btnDelete;
 	}
 
 
-	public JButton getBtnConsultar() {
+	protected JButton getBtnConsultar() {
 		return btnConsultar;
 	}
 
 
-	public PanelRadioButton getPanelFormato() {
+	protected PanelRadioButton getPanelFormato() {
 		return panelFormato;
 	}
 
 
-	public PanelRadioButton getPanelEstado() {
+	protected PanelRadioButton getPanelEstado() {
 		return panelEstado;
 	}
 
@@ -318,36 +347,45 @@ public class UI extends JFrame {
 	}
 
 
-	public JTabbedPane getPanelCentral() {
+	protected JTabbedPane getPanelCentral() {
 		return panelCentral;
 	}
 
-	public PanelRadioButton getJpanelButtonCompraVenta() {
+	protected PanelRadioButton getJpanelButtonCompraVenta() {
 		return jPanelButtonCompraVenta;
 	}
 
-	public JTextField getTextIsbnCompraVenta() {
+	protected JTextField getTextIsbnCompraVenta() {
 		return textIsbnCompraVenta;
 	}
 
-	public JLabel getTextPrecioCompraVenta() {
+	protected JLabel getTextPrecioCompraVenta() {
 		return textPrecioCompraVenta;
 	}
 
-	public JLabel getLblTotalCompraVenta() {
+	protected JLabel getLblTotalCompraVenta() {
 		return lblTotalCompraVenta;
 	}
 
-	public JPanel getPanelComprarVender() {
+	protected JPanel getPanelComprarVender() {
 		return panelComprarVender;
 	}
 
-	public JTextField getTextTituloCompraVenta() {
+	protected JTextField getTextTituloCompraVenta() {
 		return textTituloCompraVenta;
 	}
-	
-	
-	
+
+	protected JSpinner getSpinnerNumeroArticulos() {
+		return spinnerNumeroArticulos;
+	}
+
+	protected JLabel getTextCantidadCompraVenta() {
+		return textCantidadCompraVenta;
+	}
+
+	public JButton getBtnEditar() {
+		return btnEditar;
+	}
 	
 	
 	

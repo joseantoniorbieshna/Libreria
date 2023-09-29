@@ -8,6 +8,7 @@ public class Libro {
 	private Float precio;
 	private String formato;
 	private String estado;
+	private Integer cantidad;
 	
 	public final static String[] CAMPOS = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO","ESTADO" };
 	public static final String[] FORMATOS = {"Cartoné","Rústico","Grapada","Espiral"};
@@ -16,7 +17,7 @@ public class Libro {
 	
 	public Libro() {}
 
-	public Libro(String iSBN, String titulo, String autor, String editorial, Float precio, String formato, String estado) {
+	public Libro(String iSBN, String titulo, String autor, String editorial, Float precio, String formato, String estado, Integer cantidad) {
 		super();
 		this.ISBN = iSBN;
 		this.titulo = titulo;
@@ -24,6 +25,7 @@ public class Libro {
 		this.editorial = editorial;
 		this.precio = precio;
 		this.formato = formato;
+		this.cantidad = cantidad;
 	}
 	public Libro(Libro libro) {
 		super();
@@ -93,6 +95,14 @@ public class Libro {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	@Override

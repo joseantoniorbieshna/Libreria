@@ -19,15 +19,16 @@ import modelo.repository.Libreria;
 public class ServiceTabla {
 	private JTable tabla;
 	private String seleccionadoIsbnTabla;
-	private ParaUI gui;
+	private Libreria libreria;
+	
 	JMenuItem itemBorrar;
 	JMenuItem itemCopiarIsbn;
 	JMenuItem itemEditar;
 	JMenuItem itemCompraVenta;
 
-	public ServiceTabla(JTable tabla, ParaUI gui) {
+	public ServiceTabla(JTable tabla, Libreria libreria) {
 		this.tabla = tabla;
-		this.gui = gui;
+		this.libreria = libreria;
 		addComportamientoTabla();
 		itemCopiarIsbn = new JMenuItem("Copiar isbn");
 		itemBorrar = new JMenuItem("Borrar");
@@ -104,6 +105,6 @@ public class ServiceTabla {
 	}
 
 	private Libreria getLibreria() {
-		return gui.getLibreria();
+		return libreria;
 	}
 }

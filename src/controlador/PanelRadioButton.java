@@ -37,6 +37,13 @@ public class PanelRadioButton extends JPanel{
 		}
 		return null;
 	}
+	
+	
+	public boolean esEste(String input) {
+		return getTextRButtonSelected().equals(input);
+	}
+	
+	
 	public void setSelectByText(String text) {
 		Iterator<JRadioButton> iterator = radioButtons.iterator();
 		while(iterator.hasNext()) {

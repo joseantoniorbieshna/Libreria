@@ -24,8 +24,10 @@ public class ParaUI extends UI {
 
 	public ParaUI() {
 		serviceTextFields = new ServiceTextFields();
-		serviceTabla = new ServiceTabla(getTableLibrary(), this);
-		serviceCompraVenta = new ServiceCompraVenta(this);
+		serviceTabla = new ServiceTabla(getTableLibrary(), getLibreria());
+		
+		serviceCompraVenta = new ServiceCompraVenta(getTextIsbnCompraVenta(),getTextTituloCompraVenta(),getTextPrecioCompraVenta()
+							,getSpinnerNumeroArticulos(),getJpanelButtonCompraVenta(),getLblTotalCompraVenta(), getTextCantidadCompraVenta() );
 		
 		serviceTextFields.annadirComportamientoTextoIsbn(getTextISBN());
 		serviceTextFields.annadirComportamientoTextoNumeroReal(getTextPrecio());
@@ -47,15 +49,24 @@ public class ParaUI extends UI {
 	public void addComportamientoGuardar() {
 		this.getBtnSave().addActionListener(e -> {
 			if (estanTodosCamposLlenos() && getTextISBN().getText().length()==13) {
+				//TODO
 				Libro book = new Libro(getTextISBN().getText(), getTextTItulo().getText(), getTextAutor().getText(),
-						getTextEditorial().getText(), Float.parseFloat(getTextPrecio().getText()),getPanelFormato().getTextRButtonSelected(),Libro.FORMATOS[1]);
+						getTextEditorial().getText(), Float.parseFloat(getTextPrecio().getText()),getPanelFormato().getTextRButtonSelected(),Libro.FORMATOS[1],5);
 				libreria.addLibro(book);
-				vaciarCampos();
+				vaciarCamposLibro();
 				serviceTabla.rellenarTabla();
 			}
 		});
 	}
 
+	public void addComportamientoEditar() {
+		this.getBtnEditar().addActionListener(e->{
+			if(serviceCompraVenta.hayLibroSeleccionado()) {
+				vaciarCamposCompraVenta();
+				serviceCompraVenta.quitarLibro();
+			}
+		});
+	}
 
 
 	public void addComportamientoSalir() {
@@ -70,7 +81,7 @@ public class ParaUI extends UI {
 						getLibreria().pedirConfirmacionBorrarPorIsbn(isbn, this);						
 					}
 				}else {
-					vaciarCampos();					
+					vaciarCamposLibro();				
 				}
 				
 			});						
@@ -83,9 +94,7 @@ public class ParaUI extends UI {
 			if(isbnSelececcionado!=null && libreria.existe(isbnSelececcionado)) {
 				getPanelCentral().setSelectedComponent(getPanelComprarVender());
 				Libro libro = libreria.getLibroByISBN(isbnSelececcionado);
-				getTextIsbnCompraVenta().setText(libro.getISBN());
-				getTextTituloCompraVenta().setText(libro.getTitulo());
-				getTextPrecioCompraVenta().setText(libro.getPrecio().toString());
+				serviceCompraVenta.setLibro(libro);
 				
 			}
 				
