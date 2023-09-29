@@ -1,4 +1,4 @@
-package controlador;
+package servicios;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -13,9 +13,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import controlador.ParaUI;
 import modelo.repository.Libreria;
 
-public class ControladorTabla {
+public class ServiceTabla {
 	private JTable tabla;
 	private String seleccionadoIsbnTabla;
 	private ParaUI gui;
@@ -24,7 +25,7 @@ public class ControladorTabla {
 	JMenuItem itemEditar;
 	JMenuItem itemCompraVenta;
 
-	public ControladorTabla(JTable tabla, ParaUI gui) {
+	public ServiceTabla(JTable tabla, ParaUI gui) {
 		this.tabla = tabla;
 		this.gui = gui;
 		addComportamientoTabla();

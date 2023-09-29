@@ -8,34 +8,37 @@ import javax.swing.JPanel;
 
 import modelo.data.Libro;
 import modelo.repository.Libreria;
+import servicios.ServiceCompraVenta;
+import servicios.ServiceTabla;
+import servicios.ServiceTextFields;
 import vista.UI;
 
 public class ParaUI extends UI {
 	private Libreria libreria = new Libreria();
 	
-	private ControladorTextFields controlerTextField;
-	private ControladorTabla controladorTabla;
-	private ControladorCompraVenta controladorCompraVenta;
+	private ServiceTextFields serviceTextFields;
+	private ServiceTabla serviceTabla;
+	private ServiceCompraVenta serviceCompraVenta;
 
 	private JPanel actualSelectedJPanel = getPanelLibreria();
 
 	public ParaUI() {
-		controlerTextField = new ControladorTextFields();
-		controladorTabla = new ControladorTabla(getTableLibrary(), this);
-		controladorCompraVenta = new ControladorCompraVenta(this);
+		serviceTextFields = new ServiceTextFields();
+		serviceTabla = new ServiceTabla(getTableLibrary(), this);
+		serviceCompraVenta = new ServiceCompraVenta(this);
 		
-		controlerTextField.annadirComportamientoTextoIsbn(getTextISBN());
-		controlerTextField.annadirComportamientoTextoNumeroReal(getTextPrecio());
-		controlerTextField.annadirComportamientoTextoSinNumerosYSimbolos(getTextAutor());
-		controladorTabla.rellenarTabla();
+		serviceTextFields.annadirComportamientoTextoIsbn(getTextISBN());
+		serviceTextFields.annadirComportamientoTextoNumeroReal(getTextPrecio());
+		serviceTextFields.annadirComportamientoTextoSinNumerosYSimbolos(getTextAutor());
+		serviceTabla.rellenarTabla();
 		
 		
 		
 		addComportamientoGuardar();
 		addComportamientoConsultar();
 		addComportamientoBorrar(getBtnDelete());
-		addComportamientoBorrar(controladorTabla.getItemBorrar());
-		addComportamientoLlevarAPanelCompraVenta(controladorTabla.getItemCompraVenta());
+		addComportamientoBorrar(serviceTabla.getItemBorrar());
+		addComportamientoLlevarAPanelCompraVenta(serviceTabla.getItemCompraVenta());
 		addComportamientoSalir();
 		addComportamientoGuardarPanelCentralActual();
 	}
@@ -48,7 +51,7 @@ public class ParaUI extends UI {
 						getTextEditorial().getText(), Float.parseFloat(getTextPrecio().getText()),getPanelFormato().getTextRButtonSelected(),Libro.FORMATOS[1]);
 				libreria.addLibro(book);
 				vaciarCampos();
-				controladorTabla.rellenarTabla();
+				serviceTabla.rellenarTabla();
 			}
 		});
 	}
@@ -62,7 +65,7 @@ public class ParaUI extends UI {
 	public void addComportamientoBorrar(AbstractButton myComponent) {
 		myComponent.addActionListener(e ->{
 				if(actualSelectedJPanel.equals(getPanelLibreria())) {
-					String isbn= controladorTabla.getSeleccionadoIsbnTabla();
+					String isbn= serviceTabla.getSeleccionadoIsbnTabla();
 					if(isbn!=null) {
 						getLibreria().pedirConfirmacionBorrarPorIsbn(isbn, this);						
 					}
@@ -75,7 +78,7 @@ public class ParaUI extends UI {
 	
 	public void addComportamientoLlevarAPanelCompraVenta(AbstractButton myComponent) {
 		myComponent.addActionListener(e ->{
-			String isbnSelececcionado = controladorTabla.getSeleccionadoIsbnTabla();
+			String isbnSelececcionado = serviceTabla.getSeleccionadoIsbnTabla();
 			
 			if(isbnSelececcionado!=null && libreria.existe(isbnSelececcionado)) {
 				getPanelCentral().setSelectedComponent(getPanelComprarVender());

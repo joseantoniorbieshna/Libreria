@@ -1,13 +1,15 @@
-package controlador;
+package servicios;
 
 
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import controlador.PanelRadioButton;
+import controlador.ParaUI;
 import modelo.data.Libro;
 
-public class ControladorCompraVenta {
+public class ServiceCompraVenta {
 	
 	public final String [] VALORES = {"Vender","Comprar"};
 	
@@ -18,7 +20,7 @@ public class ControladorCompraVenta {
 	private PanelRadioButton panelCompraVenta;
 	private JLabel lblTotal;
 	
-	public ControladorCompraVenta(ParaUI gui) {
+	public ServiceCompraVenta(ParaUI gui) {
 		textFieldIsbn = gui.getTextIsbnCompraVenta();
 		textFieldTitulo = gui.getTextIsbnCompraVenta();
 		lblPrecio = gui.getTextPrecioCompraVenta();

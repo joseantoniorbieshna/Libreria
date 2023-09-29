@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.data.Libro;
-import utilidades.LibroObjectMother;
+import objectMother.LibroObjectMother;
 
 public class Libreria {
 	private List<Libro> arrayLibro = new ArrayList<>();

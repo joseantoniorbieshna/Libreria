@@ -1,4 +1,4 @@
-package controlador;
+package servicios;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -7,11 +7,11 @@ import javax.swing.JTextField;
 import utilidades.Validators;
 import vista.UI;
 
-public class ControladorTextFields {
+public class ServiceTextFields {
 	
 	private static int LONGITUD_ISBN=13;
 	
-	public ControladorTextFields() {
+	public ServiceTextFields() {
 	}
 
 	public void annadirComportamientoTextoIsbn(JTextField textField) {
