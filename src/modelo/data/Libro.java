@@ -10,7 +10,7 @@ public class Libro {
 	private String estado;
 	private Integer cantidad;
 	
-	public final static String[] CAMPOS = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO","ESTADO" };
+	public final static String[] CAMPOS = { "ISBN", "TITULOS", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO","ESTADO","CANTIDAD" };
 	public static final String[] FORMATOS = {"Cartoné","Rústico","Grapada","Espiral"};
 	public static final String[] ESTADOS = {"Reedición", "Novedad"};
 	
@@ -25,6 +25,7 @@ public class Libro {
 		this.editorial = editorial;
 		this.precio = precio;
 		this.formato = formato;
+		this.estado = estado;
 		this.cantidad = cantidad;
 	}
 	public Libro(Libro libro) {
@@ -36,7 +37,7 @@ public class Libro {
 		this.precio = libro.getPrecio();
 		this.formato = libro.getFormato();
 		this.estado = libro.getEstado();
-		
+		this.cantidad=libro.getCantidad();
 	}
 
 	public String getISBN() {

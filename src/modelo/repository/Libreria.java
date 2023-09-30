@@ -65,7 +65,7 @@ public class Libreria {
 	
 	
 	public DefaultTableModel getFillTableModel() {
-			String[][] filasTabla = new String[getLibreria().size()][6];
+			String[][] filasTabla = new String[getLibreria().size()][Libro.CAMPOS.length];
 			for (int i = 0; i < this.getLibreria().size(); i++) {
 				Libro libroActual = this.getLibreria().get(i);
 				
@@ -75,6 +75,8 @@ public class Libreria {
 				filasTabla[i][3] = libroActual.getAutor();
 				filasTabla[i][4] = String.valueOf(libroActual.getPrecio());
 				filasTabla[i][5] = libroActual.getFormato();
+				filasTabla[i][6] = libroActual.getEstado();
+				filasTabla[i][7] = libroActual.getCantidad().toString();
 			}
 			DefaultTableModel tableWithFill = new DefaultTableModel(filasTabla,Libro.CAMPOS);
 			return tableWithFill;	
@@ -88,13 +90,15 @@ public class Libreria {
 		return resultado;
 	}
 	
-	public void pedirConfirmacionBorrarPorIsbn(String isbn, JFrame jframe) {
+	public boolean pedirConfirmacionBorrarPorIsbn(String isbn, JFrame jframe) {
 		if (existe(isbn)) {
 			int resultado = crearMensajeConfirmaciónBorrar(isbn,jframe);
 			if (resultado == JOptionPane.OK_OPTION) {
 				removeLibroByIsbn(isbn);
+				return true;
 			}
 		}
+		return false;
 	}
 	
 }

@@ -1,5 +1,9 @@
 package servicios;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.Format;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
@@ -27,8 +31,10 @@ public class ServiceCompraVenta {
 	private Libro libro;
 	private JButton btnEditar;
 
+	private Integer cantidadOperacion = 0;
+
 	public ServiceCompraVenta(JTextField textFieldIsbn, JTextField textFieldTitulo, JLabel lblPrecio,
-			JSpinner spinnerNumeroArticulos, PanelRadioButton panelCompraVenta, JLabel lblTotal,JLabel lblCantidad) {
+			JSpinner spinnerNumeroArticulos, PanelRadioButton panelCompraVenta, JLabel lblTotal, JLabel lblCantidad) {
 		super();
 		this.textFieldIsbn = textFieldIsbn;
 		this.textFieldTitulo = textFieldTitulo;
@@ -38,6 +44,8 @@ public class ServiceCompraVenta {
 		this.lblTotal = lblTotal;
 		this.lblCantidad = lblCantidad;
 		annadirComportamientoSpinner();
+
+		panelEleccionCompraVenta.addListener(getComportamientoPanelEleccion());
 	}
 
 	public void setLibro(Libro libro) {
@@ -51,6 +59,18 @@ public class ServiceCompraVenta {
 		getLblPrecio().setText(libro.getPrecio().toString());
 		getLblCantidad().setText(libro.getCantidad().toString());
 		getSpinnerNumeroArticulos().setValue(0);
+		cantidadOperacion = 0;
+
+	}
+
+	public ActionListener getComportamientoPanelEleccion() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				spinnerNumeroArticulos.setValue(0);
+			}
+		};
 
 	}
 
@@ -58,68 +78,89 @@ public class ServiceCompraVenta {
 		getSpinnerNumeroArticulos().addChangeListener(e -> {
 			Integer valorInput = Integer.parseInt(this.spinnerNumeroArticulos.getValue().toString());
 			
-			if(hayLibroSeleccionado()) {
+			if (hayLibroSeleccionado() && panelEleccionCompraVenta.getRButtonSelected() != null) {
 				Integer cantidadLibro = libro.getCantidad();
+
 				
-				
-				if(valorInput<=cantidadLibro && panelEleccionCompraVenta.esEste(OPT_VENTA)) {
-					String cantidadTexto = String.valueOf(cantidadLibro-valorInput);
-					
-					getSpinnerNumeroArticulos().setValue(valorInput);
-					lblCantidad.setText(cantidadTexto);
-				}else if (!panelEleccionCompraVenta.esEste(OPT_COMPRA)) {
-					getSpinnerNumeroArticulos().setValue(valorInput-1);
-					
+				if (valorInput <= cantidadLibro && panelEleccionCompraVenta.esEste(OPT_VENTA)) {
+					cambiarValoresPanelPorCantidad(valorInput,true);
+					this.cantidadOperacion = -valorInput;
+				} else if (panelEleccionCompraVenta.esEste(OPT_VENTA)) {
+					getSpinnerNumeroArticulos().setValue(cantidadLibro);
+				}else if(panelEleccionCompraVenta.esEste(OPT_COMPRA)) {
+					this.cantidadOperacion = valorInput;
+					cambiarValoresPanelPorCantidad(valorInput,false);
 				}
 				
-			}else {
+
+			} else {
 				getSpinnerNumeroArticulos().setValue(0);
+				this.cantidadOperacion = 0;
 			}
-			
+
 		});
 	}
-	
-	public boolean hayLibroSeleccionado() {
-		return libro!=null;
+
+	private void cambiarValoresPanelPorCantidad(Integer valorInput, boolean isVenta) {
+		Integer valor = isVenta?-valorInput:valorInput;
+		String cantidadTexto = String.valueOf(libro.getCantidad() +(valor));
+
+		getSpinnerNumeroArticulos().setValue(valorInput);
+		lblCantidad.setText(cantidadTexto);
+		String textoPrecioTotal = String.format("%.2f", libro.getPrecio() * valorInput);
+
+		lblTotal.setText(textoPrecioTotal);
 	}
-	
-	public void quitarLibro() {
-		this.libro=null;
+	public void cambiarCantidadLibro() {
+		if (hayLibroSeleccionado()) {
+			Libro libro = getLibro();
+			Integer cantidad = libro.getCantidad() + getCantidadOperacion();
+			libro.setCantidad(cantidad);
+		}
 	}
 
-	public JTextField getTextFieldIsbn() {
+	public boolean hayLibroSeleccionado() {
+		return libro != null;
+	}
+
+	public void quitarLibro() {
+		this.libro = null;
+	}
+
+	private JTextField getTextFieldIsbn() {
 		return textFieldIsbn;
 	}
 
-	public JTextField getTextFieldTitulo() {
+	private JTextField getTextFieldTitulo() {
 		return textFieldTitulo;
 	}
 
-	public JLabel getLblPrecio() {
+	private JLabel getLblPrecio() {
 		return lblPrecio;
 	}
 
-	public JSpinner getSpinnerNumeroArticulos() {
+	private JSpinner getSpinnerNumeroArticulos() {
 		return spinnerNumeroArticulos;
 	}
 
-	public PanelRadioButton getPanelCompraVenta() {
+	private PanelRadioButton getPanelCompraVenta() {
 		return panelEleccionCompraVenta;
 	}
 
-	public JLabel getLblTotal() {
+	private JLabel getLblTotal() {
 		return lblTotal;
 	}
 
-	public JLabel getLblCantidad() {
+	private JLabel getLblCantidad() {
 		return lblCantidad;
 	}
 
 	public Libro getLibro() {
 		return libro;
 	}
-	
-	
-	
+
+	public Integer getCantidadOperacion() {
+		return cantidadOperacion;
+	}
 
 }

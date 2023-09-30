@@ -58,7 +58,8 @@ public class UI extends JFrame {
 	private JLabel lblNewLabel;
 	private JSpinner spinnerNumeroArticulos;
 	private JLabel textCantidadCompraVenta;
-	private JButton btnEditar;
+	private JButton btnConfirmar;
+	private JSpinner spinnerCantidadLibro;
 
 
 	/**
@@ -156,6 +157,11 @@ public class UI extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLibro.add(lblNewLabel, "cell 0 7,grow");
 		
+		spinnerCantidadLibro = new JSpinner();
+		spinnerCantidadLibro.setModel(new SpinnerNumberModel(0, 0, 10000, 1));
+		spinnerCantidadLibro.setPreferredSize(new Dimension(50,25));
+		panelLibro.add(spinnerCantidadLibro, "cell 1 7");
+		
 		
 		panelLibreria = new JPanel();
 		panelCentral.addTab("Libreria", null, panelLibreria, null);
@@ -217,7 +223,7 @@ public class UI extends JFrame {
 		panelComprarVender.add(lblNumeroCompraVenta, "cell 0 4,alignx center");
 		
 		spinnerNumeroArticulos =  new JSpinner();
-		spinnerNumeroArticulos.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+		spinnerNumeroArticulos.setModel(new SpinnerNumberModel(0, 0, 10000, 1));
 		spinnerNumeroArticulos.setPreferredSize(new Dimension(50,25));
 		panelComprarVender.add(spinnerNumeroArticulos, "cell 1 4,alignx left");
 		
@@ -239,8 +245,8 @@ public class UI extends JFrame {
 		btnConsultar = new JButton("Consulatar");
 		panelInferior.add(btnConsultar);
 		
-		btnEditar = new JButton("Editar");
-		panelInferior.add(btnEditar);
+		btnConfirmar = new JButton("Confirmar");
+		panelInferior.add(btnConfirmar);
 		
 		btnDelete = new JButton("Borrar");
 		panelInferior.add(btnDelete);
@@ -265,6 +271,7 @@ public class UI extends JFrame {
 		textEditorial.setText("");
 		panelFormato.deselectedAll();
 		panelEstado.deselectedAll();
+		spinnerCantidadLibro.setValue(0);
 	}
 
 	
@@ -342,7 +349,7 @@ public class UI extends JFrame {
 	}
 
 
-	public JPanel getPanelLibro() {
+	protected JPanel getPanelLibro() {
 		return panelLibro;
 	}
 
@@ -383,9 +390,14 @@ public class UI extends JFrame {
 		return textCantidadCompraVenta;
 	}
 
-	public JButton getBtnEditar() {
-		return btnEditar;
+	public JButton getBtnConfirmar() {
+		return btnConfirmar;
 	}
+
+	public JSpinner getSpinnerCantidadLibro() {
+		return spinnerCantidadLibro;
+	}
+	
 	
 	
 	

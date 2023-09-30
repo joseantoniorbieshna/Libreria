@@ -43,15 +43,17 @@ public class ParaUI extends UI {
 		addComportamientoLlevarAPanelCompraVenta(serviceTabla.getItemCompraVenta());
 		addComportamientoSalir();
 		addComportamientoGuardarPanelCentralActual();
+		addComportamientoConfrimar();
 	}
 
+	//Controlar que si borras uno, se quite de editar.
 
 	public void addComportamientoGuardar() {
 		this.getBtnSave().addActionListener(e -> {
 			if (estanTodosCamposLlenos() && getTextISBN().getText().length()==13) {
 				//TODO
 				Libro book = new Libro(getTextISBN().getText(), getTextTItulo().getText(), getTextAutor().getText(),
-						getTextEditorial().getText(), Float.parseFloat(getTextPrecio().getText()),getPanelFormato().getTextRButtonSelected(),Libro.FORMATOS[1],5);
+						getTextEditorial().getText(), Float.parseFloat(getTextPrecio().getText()),getPanelFormato().getTextRButtonSelected(),getPanelFormato().getTextRButtonSelected(),(Integer)getSpinnerCantidadLibro().getValue());
 				libreria.addLibro(book);
 				vaciarCamposLibro();
 				serviceTabla.rellenarTabla();
@@ -59,12 +61,12 @@ public class ParaUI extends UI {
 		});
 	}
 
-	public void addComportamientoEditar() {
-		this.getBtnEditar().addActionListener(e->{
-			if(serviceCompraVenta.hayLibroSeleccionado()) {
-				vaciarCamposCompraVenta();
+	public void addComportamientoConfrimar() {
+		this.getBtnConfirmar().addActionListener(e->{
+				serviceCompraVenta.cambiarCantidadLibro();
 				serviceCompraVenta.quitarLibro();
-			}
+				vaciarCamposCompraVenta();
+				serviceTabla.rellenarTabla();
 		});
 	}
 
@@ -75,13 +77,27 @@ public class ParaUI extends UI {
 
 	public void addComportamientoBorrar(AbstractButton myComponent) {
 		myComponent.addActionListener(e ->{
+			//PANEL LIBRERIA
 				if(actualSelectedJPanel.equals(getPanelLibreria())) {
 					String isbn= serviceTabla.getSeleccionadoIsbnTabla();
 					if(isbn!=null) {
-						getLibreria().pedirConfirmacionBorrarPorIsbn(isbn, this);						
+						boolean estaBorrado = getLibreria().pedirConfirmacionBorrarPorIsbn(isbn, this);
+						
+						if(estaBorrado) {
+							serviceCompraVenta.quitarLibro();
+							vaciarCamposCompraVenta();
+							vaciarCamposLibro();
+							serviceTabla.rellenarTabla();
+						}
+						
 					}
-				}else {
-					vaciarCamposLibro();				
+				//PANEL LIBRO
+				}else if (actualSelectedJPanel.equals(getPanelLibro())){
+					vaciarCamposLibro();
+				//PANEL COCMPRA VENTA
+				}else if(actualSelectedJPanel.equals(getPanelComprarVender())) {
+					serviceCompraVenta.quitarLibro();
+					vaciarCamposCompraVenta();
 				}
 				
 			});						
@@ -123,19 +139,21 @@ public class ParaUI extends UI {
         getPanelCentral().addChangeListener(e->{
         	
                 if(getPanelLibro().isVisible()) {
-                    
                     getBtnSave().setVisible(true);
                     getBtnConsultar().setVisible(true);
+                    getBtnConfirmar().setVisible(false);
                 }else if(getPanelLibreria().isVisible()){
                     
                     getBtnSave().setVisible(false);
                     getBtnConsultar().setVisible(false);
+                    getBtnConfirmar().setVisible(false);
                 }else if(getPanelComprarVender().isVisible()){
                 	
                     getBtnSave().setVisible(false);
                     getBtnConsultar().setVisible(false);
+                    getBtnConfirmar().setVisible(true);
                 }
-                actualSelectedJPanel = getPanelLibreria();
+                actualSelectedJPanel = (JPanel) getPanelCentral().getSelectedComponent();
             }
         );
 	}

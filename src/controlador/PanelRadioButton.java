@@ -38,6 +38,22 @@ public class PanelRadioButton extends JPanel{
 		return null;
 	}
 	
+	public JRadioButton getRButtonSelected() {
+		Iterator<JRadioButton> iterator = radioButtons.iterator();
+		while(iterator.hasNext()) {
+			JRadioButton boton = iterator.next();
+			if(boton.isSelected())
+				return boton;
+		}
+		return null;
+	}
+	
+	public void addListener(ActionListener actionListener){
+		radioButtons.forEach(e->{
+			e.addActionListener(actionListener);
+		});
+	}
+	
 	
 	public boolean esEste(String input) {
 		return getTextRButtonSelected().equals(input);

@@ -62,18 +62,20 @@ public class ServiceTabla {
 					tabla.setColumnSelectionInterval(0, tabla.getColumnCount() - 1);
 				}
 				
-				if (tabla.getSelectedColumn() != -1 && tabla.getSelectedRow() != -1 && e.getButton() == 3) {
-
+				
+				if (tabla.getSelectedColumn() != -1 && tabla.getSelectedRow() != -1 ) {
 					seleccionadoIsbnTabla = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
-					
-					JPopupMenu popup = new JPopupMenu("Popup");
-
-					
-					popup.add(itemCopiarIsbn);
-					popup.add(itemCompraVenta);
-					popup.add(itemEditar);
-					popup.add(itemBorrar);
-					popup.show(e.getComponent(), e.getX(), e.getY());
+					if(e.getButton() == 3) {
+						seleccionadoIsbnTabla = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
+						JPopupMenu popup = new JPopupMenu("Popup");
+						
+						
+						popup.add(itemCopiarIsbn);
+						popup.add(itemCompraVenta);
+						popup.add(itemEditar);
+						popup.add(itemBorrar);
+						popup.show(e.getComponent(), e.getX(), e.getY());
+					}
 				}
 			}
 		});
