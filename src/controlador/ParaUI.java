@@ -46,11 +46,6 @@ public class ParaUI extends UI {
 		addComportamientoConfrimar();
 		addComportamientoEditar(serviceTabla.getItemEditar());
 	}	
-	
-	//TODO
-	// Controlar que si borras uno, se quite de editar.
-	//Controlar que no guardo uno con el mismo isbn
-	
 
 	public void addComportamientoGuardar() {
 		this.getBtnSave().addActionListener(e -> {
@@ -218,7 +213,7 @@ public class ParaUI extends UI {
 
 	private boolean estanTodosCamposLlenos() {
 		if (getTextISBN().getText() != null && getTextTItulo().getText() != null && getTextAutor().getText() != null
-				&& getTextEditorial().getText() != null && getPanelFormato().getTextRButtonSelected() != null
+				&& getTextEditorial().getText() != null && getTextPrecio().getText()!=null && getPanelFormato().getTextRButtonSelected() != null
 				&& getPanelEstado().getTextRButtonSelected() != null) {
 			return true;
 		}

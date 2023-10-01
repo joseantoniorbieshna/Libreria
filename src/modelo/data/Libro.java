@@ -115,7 +115,7 @@ public class Libro {
 		this.setCantidad(libro.getCantidad());
 	}
 
-	@Override
+
 	public String toString() {
 		return "ISBN: " + getISBN() + "\n" + "TITULO: " + getTitulo() + "\n" + "AUTOR: " + getAutor() + "\n"
 				+ "EDITORIAL: " + getEditorial() + "\n"+"PRECIO: " + String.valueOf(getPrecio())+ "\n" + 

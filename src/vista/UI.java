@@ -242,7 +242,7 @@ public class UI extends JFrame {
 		btnSave = new JButton("Guardar");
 		panelInferior.add(btnSave);
 		
-		btnConsultar = new JButton("Consulatar");
+		btnConsultar = new JButton("Consultar");
 		panelInferior.add(btnConsultar);
 		
 		btnConfirmar = new JButton("Confirmar");
