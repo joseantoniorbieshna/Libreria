@@ -9,7 +9,7 @@ import vista.UI;
 
 public class ServiceTextFields {
 	
-	private static int LONGITUD_ISBN=13;
+	public static int LONGITUD_ISBN=13;
 	
 	public ServiceTextFields() {
 	}

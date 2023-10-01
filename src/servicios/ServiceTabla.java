@@ -105,6 +105,9 @@ public class ServiceTabla {
 	public String getSeleccionadoIsbnTabla() {
 		return seleccionadoIsbnTabla;
 	}
+	public boolean hayIsbnSeleccionado() {
+		return seleccionadoIsbnTabla != null;
+	}
 
 	private Libreria getLibreria() {
 		return libreria;

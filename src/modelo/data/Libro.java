@@ -105,6 +105,15 @@ public class Libro {
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
+	public void cambiarDatos(Libro libro) {
+		this.setTitulo(libro.getTitulo());
+		this.setAutor(libro.getAutor());
+		this.setEditorial(libro.getEditorial());
+		this.setPrecio(libro.getPrecio());
+		this.setFormato(libro.getFormato());
+		this.setEstado(libro.getEstado());
+		this.setCantidad(libro.getCantidad());
+	}
 
 	@Override
 	public String toString() {

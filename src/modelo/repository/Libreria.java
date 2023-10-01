@@ -57,7 +57,9 @@ public class Libreria {
 	
 	public boolean existe(String isbn) {
 		boolean existe= false;
-		for(int i=0; i<arrayLibro.size();i++) {
+		if(isbn==null) 
+			return false;
+		for(int i=0;  i<arrayLibro.size();i++) {
 			if(arrayLibro.get(i).getISBN().equals(isbn)) existe=true;
 		}
 		return existe;
