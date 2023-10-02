@@ -11,6 +11,9 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
@@ -22,8 +25,10 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.border.LineBorder;
 
 import controlador.PanelRadioButton;
+import controlador.ParaUI;
 import modelo.data.Libro;
 
+import javax.lang.model.element.Element;
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
 import javax.swing.JSpinner;
@@ -55,11 +60,24 @@ public class UI extends JFrame {
 	private JTextField textTituloCompraVenta;
 	private JLabel textPrecioCompraVenta;
 	private JLabel lblTotalCompraVenta;
-	private JLabel lblNewLabel;
+	private JLabel lblCantidad;
 	private JSpinner spinnerNumeroArticulos;
 	private JLabel textCantidadCompraVenta;
 	private JButton btnConfirmar;
 	private JSpinner spinnerCantidadLibro;
+	private JLabel lblISBN;
+	private JLabel lblTitulo;
+	private JLabel lblAutor;
+	private JLabel lblEditorial;
+	private JLabel lblPrecio;
+	private JLabel lblFormato;
+	private JLabel lblEstado;
+	private JLabel lblIsbnCompraVenta;
+	private JLabel lblTituloCompraVenta;
+	private JLabel lblPrecioCompraYVenta;
+	private JLabel lblCantidadCompraVenta;
+	private JLabel lblNumeroCompraVenta;
+	private JLabel textTotalCompraVenta;
 
 
 	/**
@@ -93,7 +111,7 @@ public class UI extends JFrame {
 		panelCentral.addTab("Libro", null, panelLibro, null);
 		panelLibro.setLayout(new MigLayout("", "[20%,grow][40%,grow][40%,grow]", "[12.5%][12.5%][12.5%][12.5%][12.5%][12.5%][12.5%][12.5%]"));
 		
-		JLabel lblISBN = new JLabel("ISBN");
+		lblISBN = new JLabel("ISBN");
 		lblISBN.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLibro.add(lblISBN, "cell 0 0,grow");
 		
@@ -106,7 +124,7 @@ public class UI extends JFrame {
 		lblPhoto.setIcon(imagen);
 		panelLibro.add(lblPhoto, "cell 2 0 1 5,alignx center,growy");
 		
-		JLabel lblTitulo = new JLabel("Titulo");
+		lblTitulo = new JLabel("Titulo");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLibro.add(lblTitulo, "cell 0 1,grow");
 		
@@ -114,7 +132,7 @@ public class UI extends JFrame {
 		panelLibro.add(textTItulo, "cell 1 1,grow");
 		textTItulo.setColumns(10);
 		
-		JLabel lblAutor = new JLabel("Autor");
+		lblAutor = new JLabel("Autor");
 		lblAutor.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLibro.add(lblAutor, "cell 0 2,grow");
 		
@@ -122,7 +140,7 @@ public class UI extends JFrame {
 		panelLibro.add(textAutor, "cell 1 2,grow");
 		textAutor.setColumns(10);
 		
-		JLabel lblEditorial = new JLabel("Editorial");
+		lblEditorial = new JLabel("Editorial");
 		lblEditorial.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLibro.add(lblEditorial, "cell 0 3,grow");
 		
@@ -130,7 +148,7 @@ public class UI extends JFrame {
 		panelLibro.add(textEditorial, "cell 1 3,grow");
 		textEditorial.setColumns(10);
 		
-		JLabel lblPrecio = new JLabel("Precio");
+		lblPrecio = new JLabel("Precio");
 		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLibro.add(lblPrecio, "cell 0 4,grow");
 		
@@ -138,24 +156,24 @@ public class UI extends JFrame {
 		panelLibro.add(textPrecio, "cell 1 4,grow");
 		textPrecio.setColumns(10);
 		
-		JLabel formato = new JLabel("Formato");
-		formato.setHorizontalAlignment(SwingConstants.CENTER);
-		panelLibro.add(formato, "cell 0 5,grow");
+		lblFormato = new JLabel("Formato");
+		lblFormato.setHorizontalAlignment(SwingConstants.CENTER);
+		panelLibro.add(lblFormato, "cell 0 5,grow");
 		
 		
 		panelFormato = new PanelRadioButton(Libro.FORMATOS);
 		panelFormato.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelLibro.add(panelFormato, "cell 1 5 2 1,grow");
 		
-		JLabel lblEstado = new JLabel("Estado:");
+		lblEstado = new JLabel("Estado:");
 		panelLibro.add(lblEstado, "cell 0 6,alignx center,growy");
 		
 		panelEstado = new PanelRadioButton(Libro.ESTADOS);
 		panelLibro.add(panelEstado, "cell 1 6 2 1,grow");
 		
-		lblNewLabel = new JLabel("Cantidad");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panelLibro.add(lblNewLabel, "cell 0 7,grow");
+		lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setHorizontalAlignment(SwingConstants.CENTER);
+		panelLibro.add(lblCantidad, "cell 0 7,grow");
 		
 		spinnerCantidadLibro = new JSpinner();
 		spinnerCantidadLibro.setModel(new SpinnerNumberModel(0, 0, 10000, 1));
@@ -175,9 +193,9 @@ public class UI extends JFrame {
 		
 		panelComprarVender = new JPanel();
 		panelCentral.addTab("Compra y venta", null, panelComprarVender, null);
-		panelComprarVender.setLayout(new MigLayout("", "[50%,grow][50%,grow][]", "[28px][28px][28px][28px][28px][28px][28px]"));
+		panelComprarVender.setLayout(new MigLayout("", "[50%,grow][50%,grow][]", "[28px:7.14%][28px:7.14%][28px:7.14%][28px:7.14%][28px:7.14%][28px:7.14%][28px:7.14%]"));
 		
-		JLabel lblIsbnCompraVenta = new JLabel("ISBN");
+		lblIsbnCompraVenta = new JLabel("ISBN");
 		lblIsbnCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
 		panelComprarVender.add(lblIsbnCompraVenta, "cell 0 0,grow");
 		
@@ -187,7 +205,7 @@ public class UI extends JFrame {
 		textIsbnCompraVenta.setText("-");
 		panelComprarVender.add(textIsbnCompraVenta, "cell 1 0,grow");
 		
-		JLabel lblTituloCompraVenta = new JLabel("Titulo");
+		lblTituloCompraVenta = new JLabel("Titulo");
 		lblTituloCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
 		panelComprarVender.add(lblTituloCompraVenta, "cell 0 1,grow");
 		
@@ -198,7 +216,7 @@ public class UI extends JFrame {
 		panelComprarVender.add(textTituloCompraVenta, "cell 1 1,grow");
 		textTituloCompraVenta.setColumns(10);
 		
-		JLabel lblPrecioCompraYVenta = new JLabel("Precio");
+		lblPrecioCompraYVenta = new JLabel("Precio");
 		lblPrecioCompraYVenta.setHorizontalAlignment(SwingConstants.CENTER);
 		panelComprarVender.add(lblPrecioCompraYVenta, "cell 0 2,grow");
 		
@@ -206,7 +224,7 @@ public class UI extends JFrame {
 		textPrecioCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
 		panelComprarVender.add(textPrecioCompraVenta, "cell 1 2,grow");
 		
-		JLabel lblCantidadCompraVenta = new JLabel("Cantidad:");
+		lblCantidadCompraVenta = new JLabel("Cantidad:");
 		lblCantidadCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
 		panelComprarVender.add(lblCantidadCompraVenta, "cell 0 3,grow");
 		
@@ -219,7 +237,7 @@ public class UI extends JFrame {
 		
 		panelComprarVender.add(jPanelButtonCompraVenta, "cell 0 5 2 1,grow");
 		
-		JLabel lblNumeroCompraVenta = new JLabel("N\u00FAmero de articulos");
+		lblNumeroCompraVenta = new JLabel("N\u00FAmero de articulos");
 		panelComprarVender.add(lblNumeroCompraVenta, "cell 0 4,alignx center");
 		
 		spinnerNumeroArticulos =  new JSpinner();
@@ -227,9 +245,9 @@ public class UI extends JFrame {
 		spinnerNumeroArticulos.setPreferredSize(new Dimension(50,25));
 		panelComprarVender.add(spinnerNumeroArticulos, "cell 1 4,alignx left");
 		
-		JLabel textTotal = new JLabel("TOTAL:");
-		textTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		panelComprarVender.add(textTotal, "cell 0 6,grow");
+		textTotalCompraVenta = new JLabel("TOTAL:");
+		textTotalCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelComprarVender.add(textTotalCompraVenta, "cell 0 6,grow");
 		
 		lblTotalCompraVenta = new JLabel("-");
 		lblTotalCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -254,7 +272,7 @@ public class UI extends JFrame {
 		btnExit = new JButton("Salir");
 		panelInferior.add(btnExit);
 		
-		
+		resizeComponentes(this);
 	}
 	
 	private static ImageIcon resizeIcon(ImageIcon icon, int width, int height) {
@@ -398,6 +416,47 @@ public class UI extends JFrame {
 		return spinnerCantidadLibro;
 	}
 	
+	
+	public void resizeComponentes(UI ui) {
+		int numeroDefault = lblISBN.getFont().getSize();
+		int alturaDefault = ui.getHeight();
+		int maxValue = 18;
+		ui.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent e) {
+				int numero = ui.getHeight()*numeroDefault/alturaDefault;
+				int fontSize=0;
+				
+				if(numero<numeroDefault) {
+					fontSize = numeroDefault;
+				}else if(numero>maxValue)
+					fontSize = maxValue;
+				else {
+					fontSize=numero;
+				}
+				
+				Font newFont = new Font("Thaoma", Font.BOLD, fontSize);
+				//Libro
+				lblISBN.setFont(newFont);
+				lblCantidad.setFont(newFont);
+				lblAutor.setFont(newFont);
+				lblTitulo.setFont(newFont);
+				lblPrecio.setFont(newFont);
+				lblEditorial.setFont(newFont);
+				lblFormato.setFont(newFont);
+				lblEstado.setFont(newFont);
+				
+				//Compra Venta
+//				lblIsbnCompraVenta.setFont(newFont);
+//				lblTituloCompraVenta.setFont(newFont);
+//				lblPrecioCompraYVenta.setFont(newFont);
+//				lblCantidadCompraVenta.setFont(newFont);
+//				lblNumeroCompraVenta.setFont(newFont);
+//				textTotalCompraVenta.setFont(newFont);
+				
+			}
+			
+		});
+	}
 	
 	
 	

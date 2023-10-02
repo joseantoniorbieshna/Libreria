@@ -1,5 +1,8 @@
 package controlador;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,6 +48,7 @@ public class ParaUI extends UI {
 		addComportamientoGuardarPanelCentralActual();
 		addComportamientoConfrimar();
 		addComportamientoEditar(serviceTabla.getItemEditar());
+		
 	}	
 
 	public void addComportamientoGuardar() {
