@@ -445,7 +445,7 @@ public class UI extends JFrame {
 				lblFormato.setFont(newFont);
 				lblEstado.setFont(newFont);
 				
-				//Compra Venta
+//					Compra Venta
 //				lblIsbnCompraVenta.setFont(newFont);
 //				lblTituloCompraVenta.setFont(newFont);
 //				lblPrecioCompraYVenta.setFont(newFont);
