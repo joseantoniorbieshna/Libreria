@@ -37,6 +37,11 @@ public class ParaUI extends UI {
 		serviceTextFields.annadirComportamientoTextoIsbn(getTextISBN());
 		serviceTextFields.annadirComportamientoTextoNumeroReal(getTextPrecio());
 		serviceTextFields.annadirComportamientoTextoSinNumerosYSimbolos(getTextAutor());
+		
+		serviceTextFields.evitarConbinacionPegar(getTextISBN());
+		serviceTextFields.evitarConbinacionPegar(getTextPrecio());
+		serviceTextFields.evitarConbinacionPegar(getTextAutor());
+		
 		serviceTabla.rellenarTabla();
 
 		addComportamientoGuardar();

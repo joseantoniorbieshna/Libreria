@@ -55,4 +55,45 @@ public class ServiceTextFields {
 			}
 		});
 	}
+	
+	public void evitarConbinacionPegar(JTextField textField) {
+		textField.addKeyListener(new KeyAdapter() {
+	        boolean ctrlPressed = false;
+	        boolean vPressed = false;
+
+	        @Override
+	        public void keyPressed(KeyEvent e) {
+	            switch(e.getKeyCode()) {
+	            case KeyEvent.VK_V:
+	                vPressed=true;
+
+	                break;
+	            case KeyEvent.VK_CONTROL:
+	                ctrlPressed=true;
+	                break;
+	            }
+
+	            if(ctrlPressed && vPressed) {
+	                e.consume();// Stop the event from propagating.
+	            }
+	        }
+
+	        @Override
+	        public void keyReleased(KeyEvent e) {
+	            switch(e.getKeyCode()) {
+	            case KeyEvent.VK_V:
+	                vPressed=false;
+
+	                break;
+	            case KeyEvent.VK_CONTROL:
+	                ctrlPressed=false;
+	                break;
+	            }
+
+	            if(ctrlPressed && vPressed) {
+	                e.consume();// Stop the event from propagating.
+	            }
+	        }
+	    });
+	}
 }
