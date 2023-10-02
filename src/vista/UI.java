@@ -22,6 +22,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import net.miginfocom.swing.MigLayout;
+import servicios.ServiceCompraVenta;
+
 import javax.swing.border.LineBorder;
 
 import controlador.PanelRadioButton;
@@ -51,11 +53,11 @@ public class UI extends JFrame {
 	private JButton btnConsultar;
 	private PanelRadioButton panelFormato;
 	private PanelRadioButton panelEstado;
+	private PanelRadioButton jPanelButtonCompraVenta;
 	private JPanel panelLibro;
 	private JTabbedPane panelCentral;
 	private JPanel panelComprarVender;
 	private JLabel lblPhoto;
-	private PanelRadioButton jPanelButtonCompraVenta;
 	private JTextField textIsbnCompraVenta;
 	private JTextField textTituloCompraVenta;
 	private JLabel textPrecioCompraVenta;
@@ -232,7 +234,7 @@ public class UI extends JFrame {
 		textCantidadCompraVenta.setHorizontalAlignment(SwingConstants.CENTER);
 		panelComprarVender.add(textCantidadCompraVenta, "cell 1 3,grow");
 		
-		jPanelButtonCompraVenta = new PanelRadioButton(new String[]{"Vender","Comprar"});
+		jPanelButtonCompraVenta = new PanelRadioButton(ServiceCompraVenta.VALORES);
 		jPanelButtonCompraVenta.setSelectByText("Vender");
 		
 		panelComprarVender.add(jPanelButtonCompraVenta, "cell 0 5 2 1,grow");
@@ -415,8 +417,7 @@ public class UI extends JFrame {
 	public JSpinner getSpinnerCantidadLibro() {
 		return spinnerCantidadLibro;
 	}
-	
-	
+
 	public void resizeComponentes(UI ui) {
 		int numeroDefault = lblISBN.getFont().getSize();
 		int alturaDefault = ui.getHeight();

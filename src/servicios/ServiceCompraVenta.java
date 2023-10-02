@@ -16,9 +16,9 @@ import utilidades.Validators;
 
 public class ServiceCompraVenta {
 
-	public final String[] VALORES = { "Vender", "Comprar" };
-	private final String OPT_VENTA = VALORES[0];
-	private final String OPT_COMPRA = VALORES[1];
+	public static final String[] VALORES = { "Vender", "Comprar" };
+	private static final String OPT_VENTA = ServiceCompraVenta.VALORES[0];
+	private static final String OPT_COMPRA = ServiceCompraVenta.VALORES[1];
 
 	private JTextField textFieldIsbn;
 	private JTextField textFieldTitulo;
@@ -82,12 +82,12 @@ public class ServiceCompraVenta {
 				Integer cantidadLibro = libro.getCantidad();
 
 				
-				if (valorInput <= cantidadLibro && panelEleccionCompraVenta.esEste(OPT_VENTA)) {
+				if (valorInput <= cantidadLibro && panelEleccionCompraVenta.esEste(ServiceCompraVenta.OPT_VENTA)) {
 					cambiarValoresPanelPorCantidad(valorInput,true);
 					this.cantidadOperacion = -valorInput;
-				} else if (panelEleccionCompraVenta.esEste(OPT_VENTA)) {
+				} else if (panelEleccionCompraVenta.esEste(ServiceCompraVenta.OPT_VENTA)) {
 					getSpinnerNumeroArticulos().setValue(cantidadLibro);
-				}else if(panelEleccionCompraVenta.esEste(OPT_COMPRA)) {
+				}else if(panelEleccionCompraVenta.esEste(ServiceCompraVenta.OPT_COMPRA)) {
 					this.cantidadOperacion = valorInput;
 					cambiarValoresPanelPorCantidad(valorInput,false);
 				}

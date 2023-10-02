@@ -196,11 +196,13 @@ public class ParaUI extends UI {
 	public void editarPanelLibroParaGuardar() {
 		getBtnSave().setText(OPT_GUARDAR);
 		getTextISBN().setEditable(true);
+		getSpinnerCantidadLibro().setEnabled(true);
 	}
 
 	public void editarPanelLibroParaEditar() {
 		getBtnSave().setText(OPT_EDITAR);
 		getTextISBN().setEditable(false);
+		getSpinnerCantidadLibro().setEnabled(false);
 	}
 
 	public void addComportamientoEditar(AbstractButton myComponent) {
