@@ -135,6 +135,10 @@ public class ParaUI extends UI {
 				getPanelCentral().setSelectedComponent(getPanelComprarVender());
 				Libro libro = libreria.getLibroByISBN(isbnSelececcionado);
 				serviceCompraVenta.setLibro(libro);
+				
+				//Vaciar el de libro para no tener doble comportamiento
+				editarPanelLibroParaGuardar();
+				vaciarCamposLibro();
 
 			}
 
@@ -207,6 +211,10 @@ public class ParaUI extends UI {
 				getSpinnerCantidadLibro().setValue(libro.getCantidad());
 				
 				editarPanelLibroParaEditar();
+				
+				//Quitar cosas en panel compra venta
+				serviceCompraVenta.quitarLibro();
+				vaciarCamposCompraVenta();
 			}
 		});
 	}
